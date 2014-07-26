@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.hooapps.pca.cvilleart.artfinder"
+        minSdkVersion 15
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile group: 'com.android.support', name: 'support-v4', version:'19.0.0'
+    compile 'com.jakewharton:butterknife:5.0.0'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.picasso:picasso:2.2.0'
+    compile 'com.willowtreeapps.saguaro:saguaro-android:1.0.0'
+    compile 'com.squareup.retrofit:retrofit:1.4.1'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+
+    compile(group: 'com.willowtreeapps', name: 'oak-library', version:'1.1.9') {
+        exclude(module: 'support-v4')
+        exclude(module: 'guava')
+        exclude(module: 'okhttp')
+        exclude(module: 'roboguice')
+        exclude(module: 'httpresponsecache')
+        exclude(module: 'disklrucache')
+    }
+    // compile 'com.google.android.gms:play-services:4.3.23'
+
+
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
+}

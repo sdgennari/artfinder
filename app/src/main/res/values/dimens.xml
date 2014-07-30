@@ -1,7 +1,14 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Margin and padding values -->
+    <dimen name="margin_h">16dp</dimen>
+    <dimen name="margin_v">16dp</dimen>
+    <dimen name="margin_h_half">8dp</dimen>
+    <dimen name="margin_v_half">8dp</dimen>
+    <dimen name="padding_h_card">8dp</dimen>
+    <dimen name="padding_v_card">8dp</dimen>
 
+    <!-- Nav drawer settings -->
     <dimen name="nav_drawer_width">280dp</dimen>
+    <dimen name="nav_drawer_item_height">48dp</dimen>
+    <dimen name="nav_drawer_text_title">20sp</dimen>
 </resources>

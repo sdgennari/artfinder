@@ -10,4 +10,14 @@ public class MainApp extends Application {
 
     // TODO ADD ANALYTICS TRACKING
     private static final String ANALYTICS_TRACKER_ID = "XXX";
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sContext = this;
+    }
+
+    public static Context getContext() {
+        return sContext;
+    }
 }

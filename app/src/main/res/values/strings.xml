@@ -5,4 +5,21 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="home">Home</string>
+    <string name="map">Map</string>
+    <string name="venues">Venues</string>
+    <string name="events">Events</string>
+    <string name="transportation">Transportation</string>
+
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_closed">Drawer Closed</string>
+
+    <string-array name="nav_drawer_items">
+        <item>@string/home</item>
+        <item>@string/map</item>
+        <item>@string/venues</item>
+        <item>@string/events</item>
+        <item>@string/transportation</item>
+    </string-array>
+
 </resources>

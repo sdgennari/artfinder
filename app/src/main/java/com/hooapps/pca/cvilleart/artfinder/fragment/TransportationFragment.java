@@ -1,4 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
-public class TransportationFragment {
+import android.app.Fragment;
+
+public class TransportationFragment extends Fragment {
 }

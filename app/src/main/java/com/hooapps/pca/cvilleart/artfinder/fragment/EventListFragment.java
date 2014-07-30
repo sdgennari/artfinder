@@ -1,4 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
-public class EventListFragment {
+import android.app.Fragment;
+
+public class EventListFragment extends Fragment {
 }

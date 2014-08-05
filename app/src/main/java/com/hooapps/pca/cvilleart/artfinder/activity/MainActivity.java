@@ -2,6 +2,7 @@ package com.hooapps.pca.cvilleart.artfinder.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -11,20 +12,33 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.adapter.NavDrawerAdapter;
+import com.hooapps.pca.cvilleart.artfinder.api.VenueDatabaseIntentService;
+import com.hooapps.pca.cvilleart.artfinder.api.VenueService;
+import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
+import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenueResponse;
+import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.fragment.EventListFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.HomeFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.MapFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.TransportationFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.VenueListFragment;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.RestAdapter;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -34,14 +48,26 @@ public class MainActivity extends BaseActivity {
     @InjectView(R.id.nav_drawer)
     ListView navDrawer;
 
+    private VenueService venueService;
+    private Datastore datastore;
+
     private NavDrawerAdapter navDrawerAdapter;
     private ActionBarDrawerToggle drawerToggle;
+
+    private Subscription artVenueFetchTask;
+    private List<ArtVenue> artVenueList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        // Initialize the datastore singleton
+        datastore = Datastore.getInstance();
+
+        // Fetch ArtVenue data
+        fetchArtVenueData();
 
         // Configure the adapter to add items to the NavDrawer
         ArrayList<String> navDrawerItems = new ArrayList<String>(
@@ -110,5 +136,16 @@ public class MainActivity extends BaseActivity {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.replace(R.id.content_frame, f);
         ft.commit();
+    }
+
+    private void fetchArtVenueData() {
+        String upgradeDateString = datastore.getArtVenueUpgradeDate();
+        Log.d("SUCCESS", upgradeDateString);
+        String whereClause = String.format(VenueService.WHERE_DATE_QUERY_BASE, upgradeDateString);
+        Log.d("SUCCESS", whereClause);
+
+        Intent intent = new Intent(this, VenueDatabaseIntentService.class);
+        intent.putExtra(C.WHERE_CLAUSE, whereClause);
+        startService(intent);
     }
 }

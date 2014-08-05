@@ -24,7 +24,6 @@ public class VenueTable {
     public static final String COL_IS_DELETED = "is_deleted";
     public static final String COL_CREATED_AT = "updated_at";
     public static final String COL_UPDATED_AT = "updated_at";
-    public static final String COL_ACL = "acl";
 
     private static final String CREATE_TABLE = "CREATE TABLE "
             + TABLE_VENUES
@@ -36,8 +35,8 @@ public class VenueTable {
             + COL_EMAIL + " VARCHAR(255), "
             + COL_HOME_PAGE + " VARCHAR(255), "
             + COL_IMAGE_URL + " VARCHAR(255), "
-            + COL_LATITUDE + " INTEGER, "
-            + COL_LONGITUDE + " INTEGER, "
+            + COL_LATITUDE + " VARCHAR(20), "
+            + COL_LONGITUDE + " VARCHAR(20), "
             + COL_ORGANIZATION_NAME + " VARCHAR(255) NOT NULL, "
             + COL_PHONE + " VARCHAR(20), "
             + COL_PRIMARY_CATEGORY + " VARCHAR(20), "
@@ -47,8 +46,7 @@ public class VenueTable {
             + COL_ZIP + " INTEGER, "
             + COL_IS_DELETED + " BOOL NOT NULL DEFAULT '1', "
             + COL_CREATED_AT + " INTEGER, "
-            + COL_UPDATED_AT + " INTEGER, "
-            + COL_ACL + " VARCHAR(255) "
+            + COL_UPDATED_AT + " INTEGER "
             + ");";
 
     private static final String DROP_TABLE = "DROP TABLIE IF EXISTS " + TABLE_VENUES;

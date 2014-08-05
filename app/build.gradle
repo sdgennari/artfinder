@@ -25,8 +25,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.picasso:picasso:2.2.0'
     compile 'com.willowtreeapps.saguaro:saguaro-android:1.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.4.1'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'com.squareup.dagger:dagger:1.2.1'
+    compile 'com.netflix.rxjava:rxjava-core:0.17.5'
+    compile 'com.netflix.rxjava:rxjava-android:0.17.5'
 
     compile(group: 'com.willowtreeapps', name: 'oak-library', version:'1.1.9') {
         exclude(module: 'support-v4')

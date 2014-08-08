@@ -22,14 +22,14 @@ public class VenueTable {
     public static final String COL_STREET_ADDRESS = "street_address";
     public static final String COL_ZIP = "zip";
     public static final String COL_IS_DELETED = "is_deleted";
-    public static final String COL_CREATED_AT = "updated_at";
+    public static final String COL_CREATED_AT = "created_at";
     public static final String COL_UPDATED_AT = "updated_at";
 
     private static final String CREATE_TABLE = "CREATE TABLE "
             + TABLE_VENUES
             + " ( "
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_PARSE_OBJECT_ID + " VARCHAR(10) NOT NULL, "
+            + COL_PARSE_OBJECT_ID + " VARCHAR(10) NOT NULL UNIQUE, "
             + COL_CITY + " VARCHAR(255), "
             + COL_DESCRIPTION + " TEXT, "
             + COL_EMAIL + " VARCHAR(255), "

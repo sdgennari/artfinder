@@ -27,7 +27,8 @@ public interface VenueService {
             "X-Parse-REST-API-Key: " + C.PARSE_REST_API_KEY
     })
     @GET("/1/classes/ArtVenue")
-    public Observable<ArtVenueResponse> getAllArtVenuesAfterDate(@Query("where") String whereClause);
+//    public Observable<ArtVenueResponse> getAllArtVenuesAfterDate(@Query("where") String whereClause);
+    public ArtVenueResponse getAllArtVenuesAfterDate(@Query("where") String whereClause);
 
 
     // TODO CHECK PARSE SYNTAX FOR QUERYING A SINGLE OBJECT

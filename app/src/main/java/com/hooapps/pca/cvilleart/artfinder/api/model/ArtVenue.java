@@ -72,7 +72,7 @@ public class ArtVenue {
      */
     public long getCreatedTime() {
         try {
-            Date date = dateFormat.parse(createdAtString);
+            Date date = dateFormat.parse(createdAtString.replaceAll("[a-zA-Z]", " ").trim());
             return date.getTime();
         } catch (ParseException e) {
             Log.e(MainApp.TAG, e.getLocalizedMessage());
@@ -86,7 +86,7 @@ public class ArtVenue {
      */
     public long getUpdatedTime() {
         try {
-            Date date = dateFormat.parse(updatedAtString);
+            Date date = dateFormat.parse(updatedAtString.replaceAll("[a-zA-Z]", " ").trim());
             return date.getTime();
         } catch (ParseException e) {
             Log.e(MainApp.TAG, e.getLocalizedMessage());

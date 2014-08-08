@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity {
                 R.string.drawer_open,       // Open description
                 R.string.drawer_closed      // Closed description
         ) {
-            // TODO HANDLE DRAWER EVENTS HERE
+            // TODO HANDLE DRAWER TOGGLE EVENTS HERE
         };
         drawerLayout.setDrawerListener(drawerToggle);
 

@@ -3,10 +3,11 @@ package com.hooapps.pca.cvilleart.artfinder;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.hooapps.pca.cvilleart.artfinder.constants.C;
+
 public class Datastore {
 
     private static final String ART_VENUE_UPGRADE_DATE = "artVenueUpgradeDate";
-    private static final String DEFAULT_UPGRADE_TIME = "2014-01-01T00:00:00.000Z";
 
     private static Datastore instance;
 
@@ -32,12 +33,12 @@ public class Datastore {
         return encryptedSharedPreferences;
     }
 
-    public void saveVenueUpgradeDate(String date) {
+    public void saveVenueUpdateDate(String date) {
         getEditor().putString(ART_VENUE_UPGRADE_DATE, date).commit();
     }
 
-    public String getArtVenueUpgradeDate() {
-        return getPrefs().getString(ART_VENUE_UPGRADE_DATE, DEFAULT_UPGRADE_TIME);
+    public String getArtVenueUpdateDate() {
+        return getPrefs().getString(ART_VENUE_UPGRADE_DATE, C.DEFAULT_UPDATED_AT_TIME);
     }
 
 }

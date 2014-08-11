@@ -64,7 +64,8 @@ public class ArtVenue {
     @SerializedName("isDeleted")
     public String isDeletedString;
 
-    public String objectId;
+    @SerializedName("objectId")
+    public String parseObjectId;
 
     /**
      * Method to parse the createdAt string as UNIX time

@@ -13,13 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.hooapps.pca.cvilleart.artfinder.Datastore;
-import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.adapter.NavDrawerAdapter;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueService;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
-import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenueResponse;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.fragment.EventListFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.HomeFragment;
@@ -27,18 +25,13 @@ import com.hooapps.pca.cvilleart.artfinder.fragment.MapFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.TransportationFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.VenueListFragment;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import retrofit.RestAdapter;
-import rx.Observer;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -139,13 +132,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void fetchArtVenueData() {
-        String upgradeDateString = datastore.getArtVenueUpgradeDate();
+        String upgradeDateString = datastore.getArtVenueUpdateDate();
         Log.d("SUCCESS", upgradeDateString);
         String whereClause = String.format(VenueService.WHERE_DATE_QUERY_BASE, upgradeDateString);
         Log.d("SUCCESS", whereClause);
 
         Intent intent = new Intent(this, VenueDatabaseIntentService.class);
-        intent.putExtra(C.WHERE_CLAUSE, whereClause);
+        intent.putExtra(C.EXT_WHERE_CLAUSE, whereClause);
         startService(intent);
     }
 }

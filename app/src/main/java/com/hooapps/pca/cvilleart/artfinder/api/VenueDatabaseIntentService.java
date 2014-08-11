@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenueResponse;
@@ -14,6 +15,7 @@ import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -32,7 +34,7 @@ public class VenueDatabaseIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String whereClause = intent.getStringExtra(C.WHERE_CLAUSE);
+        String whereClause = intent.getStringExtra(C.EXT_WHERE_CLAUSE);
         venueService = initVenueService();
         ArtVenueResponse response = venueService.getAllArtVenuesAfterDate(whereClause);
         artVenueList = response.results;
@@ -53,18 +55,48 @@ public class VenueDatabaseIntentService extends IntentService {
 
         // Loop through every item and prep it for insert
         ContentValues values;
+        String lastUpdatedTime = "";
+
+        Log.d("TEST", "Size: " + artVenueList.size());
+
         for (ArtVenue venue : artVenueList) {
             values = makeContentValuesFromObject(venue);
             // Insert or update the columns
             db.insertWithOnConflict(VenueTable.TABLE_VENUES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+            // Change the time to the lastUpdated
+            lastUpdatedTime = venue.updatedAtString;
         }
 
         // Commit the transaction all at once to save time
         db.setTransactionSuccessful();
         db.endTransaction();
 
+        // Save the last updated time in the database
+        if (!lastUpdatedTime.isEmpty()) {
+            Datastore.getInstance().saveVenueUpdateDate(lastUpdatedTime);
+        }
+
         // TODO REMOVE AFTER VERIFYING SUCCESS
         testDataSave(db);
+
+        // TODO DEVELOP A MORE EFFICIENT WAY TO SAVE IMAGES
+//        saveVenueImages();
+    }
+
+    private void saveVenueImages() {
+        ArrayList<String> urlList = new ArrayList<String>();
+        ArrayList<String> parseObjectIdList = new ArrayList<String>();
+        for (ArtVenue venue : artVenueList) {
+            urlList.add(venue.imageUrl);
+            parseObjectIdList.add(venue.parseObjectId);
+        }
+        Log.d("TEST", "Size: " + urlList.size());
+
+        Intent downloadIntent = new Intent(this, ImageDownloadIntentService.class);
+        downloadIntent.putExtra(C.EXT_IMAGE_URL_LIST, urlList);
+        downloadIntent.putExtra(C.EXT_PARSE_OBJECT_ID_LIST, parseObjectIdList);
+        startService(downloadIntent);
     }
 
     private void testDataSave(SQLiteDatabase db) {
@@ -84,12 +116,12 @@ public class VenueDatabaseIntentService extends IntentService {
                 null,
                 null);
 
-        Log.d("SUCCESS", "Items: " + c.getCount());
+        Log.d("TEST", "Items: " + c.getCount());
     }
 
     private ContentValues makeContentValuesFromObject(ArtVenue venue) {
         ContentValues values = new ContentValues();
-        values.put(VenueTable.COL_PARSE_OBJECT_ID, venue.objectId);
+        values.put(VenueTable.COL_PARSE_OBJECT_ID, venue.parseObjectId);
         values.put(VenueTable.COL_CITY, venue.city);
         values.put(VenueTable.COL_DESCRIPTION, venue.description);
         values.put(VenueTable.COL_EMAIL, venue.emailAddress);

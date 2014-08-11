@@ -18,7 +18,7 @@ public interface VenueService {
             "X-Parse-Application-Id: " + C.PARSE_APPLICATION_ID,
             "X-Parse-REST-API-Key: " + C.PARSE_REST_API_KEY
     })
-    @GET("/1/classes/ArtVenue")
+    @GET("/1/classes/ArtVenue/&order=updatedAt")        // Sort by updatedAt to make last item in list most recent
     public Observable<ArtVenueResponse> getAllArtVenues();
 
     // NOTE: date_string is of format: 2012-04-30T09:34:08.256Z
@@ -26,7 +26,7 @@ public interface VenueService {
             "X-Parse-Application-Id: " + C.PARSE_APPLICATION_ID,
             "X-Parse-REST-API-Key: " + C.PARSE_REST_API_KEY
     })
-    @GET("/1/classes/ArtVenue")
+    @GET("/1/classes/ArtVenue/?order=updatedAt")        // Sort by updatedAt to make last item in list most recent
 //    public Observable<ArtVenueResponse> getAllArtVenuesAfterDate(@Query("where") String whereClause);
     public ArtVenueResponse getAllArtVenuesAfterDate(@Query("where") String whereClause);
 

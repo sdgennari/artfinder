@@ -1,11 +1,21 @@
 <resources>
-    <!-- Margin and padding values -->
-    <dimen name="margin_h">16dp</dimen>
-    <dimen name="margin_v">16dp</dimen>
-    <dimen name="margin_h_half">8dp</dimen>
-    <dimen name="margin_v_half">8dp</dimen>
-    <dimen name="padding_h_card">8dp</dimen>
-    <dimen name="padding_v_card">8dp</dimen>
+    <!-- Base Margin and Padding Values -->
+    <dimen name="margin">16dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="padding_card">8dp</dimen>
+
+    <!-- List Items-->
+    <dimen name="li_body_height">72dp</dimen>
+    <dimen name="li_header_height">48dp</dimen>
+    <dimen name="li_item_size">48dp</dimen>
+    <dimen name="li_body_size">72dp</dimen>
+    <dimen name="li_body_padding">16dp</dimen>
+    <dimen name="li_body_padding_half">8dp</dimen>
+
+    <!-- Font Sizes -->
+    <dimen name="text_header">20sp</dimen>
+    <dimen name="text_body_title">16sp</dimen>
+    <dimen name="text_body_content">14sp</dimen>
 
     <!-- Nav drawer settings -->
     <dimen name="nav_drawer_width">280dp</dimen>

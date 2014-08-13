@@ -10,7 +10,7 @@
         android:id="@+id/nav_item_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_drawer_item_height"
-        android:layout_marginLeft="@dimen/margin_h"
+        android:layout_marginLeft="@dimen/margin"
         android:gravity="center_vertical"
         android:textSize="@dimen/nav_drawer_text_title"
         android:textColor="@color/text_primary"/>

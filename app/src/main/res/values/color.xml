@@ -11,4 +11,6 @@
     <color name="li_bg_default">#FFFFFFFF</color>
     <color name="li_bg_pressed">#FFEEEEEE</color>
 
+    <color name="card_container_bg">#FFE0E0E0</color>
+
 </resources>

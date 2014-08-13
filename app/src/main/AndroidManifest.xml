@@ -23,6 +23,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.VenueDetailActivity"/>
+
         <service android:name=".api.VenueDatabaseIntentService"
             android:exported="false"/>
         <service android:name=".api.ImageDownloadIntentService"

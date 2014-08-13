@@ -2,6 +2,7 @@ package com.hooapps.pca.cvilleart.artfinder.fragment;
 
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
+import com.hooapps.pca.cvilleart.artfinder.activity.VenueDetailActivity;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
@@ -40,7 +42,9 @@ public class VenueListFragment extends BaseFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(getActivity(), VenueDetailActivity.class);
+        intent.putExtra(C.EXT_PARSE_OBJECT_ID, venueList.get(position).parseObjectId);
+        startActivity(intent);
     }
 
     @Override
@@ -48,8 +52,7 @@ public class VenueListFragment extends BaseFragment implements
         View root = inflater.inflate(R.layout.fragment_venue_list, container, false);
         ButterKnife.inject(this, root);
 
-        PCASqliteHelper dbHelper = new PCASqliteHelper(MainApp.getContext());
-        db = dbHelper.getWritableDatabase();
+        db = MainApp.getDatabase();
 
         venueList = new ArrayList<ArtVenue>();
 
@@ -58,6 +61,8 @@ public class VenueListFragment extends BaseFragment implements
         adapter.addAll(venueList);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(this);
 
         return root;
     }

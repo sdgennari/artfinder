@@ -10,6 +10,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_marginBottom">@dimen/margin_half</item>
+        <item name="android:paddingLeft">@dimen/shadow_padding</item>
+        <item name="android:paddingRight">@dimen/shadow_padding</item>
+        <item name="android:paddingTop">@dimen/shadow_padding</item>
         <item name="android:paddingBottom">@dimen/shadow_padding_bottom</item>
         <item name="android:background">@drawable/card_bg_white</item>
     </style>
@@ -17,7 +20,7 @@
     <style name="card_divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/text_primary</item>
+        <item name="android:background">@color/text_hint</item>
     </style>
 
     <style name="card_button">

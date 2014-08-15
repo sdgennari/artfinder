@@ -13,6 +13,7 @@ import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
+import com.hooapps.pca.cvilleart.artfinder.util.BlurTransform;
 import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
 import com.squareup.picasso.Picasso;
 
@@ -72,7 +73,11 @@ public class VenueDetailActivity extends BaseActivity {
                 VenueTable.COL_PHONE,
                 VenueTable.COL_DESCRIPTION,
                 VenueTable.COL_LATITUDE,
-                VenueTable.COL_LONGITUDE
+                VenueTable.COL_LONGITUDE,
+
+                // TODO TEMPORARILY GET THE IMAGE URL
+                // IN THE FUTURE, LOAD THE IMAGE VIA RESOURCES
+                VenueTable.COL_IMAGE_URL
         };
 
         Cursor c = db.query(
@@ -98,6 +103,10 @@ public class VenueDetailActivity extends BaseActivity {
         artVenue.latitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LATITUDE));
         artVenue.longitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LONGITUDE));
 
+        // TODO TEMPORARILY GET THE IMAGE URL
+        // IN THE FUTURE, LOAD THE IMAGE VIA RESOURCES
+        artVenue.imageUrl = c.getString(c.getColumnIndex(VenueTable.COL_IMAGE_URL));
+
         return artVenue;
     }
 
@@ -105,7 +114,7 @@ public class VenueDetailActivity extends BaseActivity {
         int colorResId = ColorUtils.getColorForCategory(venue.primaryCategory);
         // TODO SET IMAGE IN imageView with Picasso
         imageView.setBackgroundColor(getResources().getColor(colorResId));
-        Picasso.with(this).load(venue.imageUrl).resize(400, 140).centerCrop().into(imageView);
+        Picasso.with(this).load(venue.imageUrl).resize(400, 140).centerCrop().transform(new BlurTransform(this)).into(imageView);
         nameView.setText(venue.organizationName);
         nameView.requestFocus();
         nameView.setSelected(true);

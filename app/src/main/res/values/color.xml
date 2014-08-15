@@ -6,11 +6,20 @@
     <color name="text_primary">#CC000000</color>
     <color name="text_secondary">#8C000000</color>
     <color name="text_hint">#40000000</color>
-    <color name="text_header">#FFFFFFFF</color>
+    <color name="text_white">#FFFFFFFF</color>
 
     <color name="li_bg_default">#FFFFFFFF</color>
     <color name="li_bg_pressed">#FFEEEEEE</color>
 
     <color name="card_container_bg">#FFE0E0E0</color>
+    <color name="card_bg">#FFFFFFFF</color>
+    <color name="shadow">#1E000000</color>
+    <color name="black_overlay">#AA000000</color>
+
+    <color name="green">#FF259b24</color>
+    <color name="cyan">#FF00bcd4</color>
+    <color name="purple">#FF9c27b0</color>
+    <color name="indigo">#FF3f51b5</color>
+    <color name="deep_orange">#FFff5722</color>
 
 </resources>

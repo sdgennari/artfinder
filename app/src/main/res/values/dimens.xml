@@ -1,8 +1,11 @@
 <resources>
-    <!-- Base Margin and Padding Values -->
+    <!-- Base Values -->
     <dimen name="margin">16dp</dimen>
     <dimen name="margin_half">8dp</dimen>
     <dimen name="padding_card">8dp</dimen>
+    <dimen name="padding_text">4dp</dimen>
+    <dimen name="shadow_padding">1px</dimen>
+    <dimen name="shadow_padding_bottom">3px</dimen>
 
     <!-- List Items-->
     <dimen name="li_body_height">72dp</dimen>
@@ -21,4 +24,8 @@
     <dimen name="nav_drawer_width">280dp</dimen>
     <dimen name="nav_drawer_item_height">48dp</dimen>
     <dimen name="nav_drawer_text_title">20sp</dimen>
+
+    <!-- Cards -->
+    <dimen name="card_button_height">48dp</dimen>
+    <dimen name="card_header_height">32dp</dimen>
 </resources>

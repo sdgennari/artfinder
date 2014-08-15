@@ -14,6 +14,13 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_closed">Drawer Closed</string>
 
+    <string name="venue_view_on_map">View on Map</string>
+    <string name="venue_get_directions">Get Directions</string>
+    <string name="venue_address">Address</string>
+    <string name="venue_description">Description</string>
+    <string name="venue_category">Category:</string>
+    <string name="venue_phone_number">Phone Number:</string>
+
     <string-array name="nav_drawer_items">
         <item>@string/home</item>
         <item>@string/map</item>

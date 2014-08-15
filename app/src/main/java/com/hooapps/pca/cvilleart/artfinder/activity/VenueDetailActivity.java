@@ -3,13 +3,21 @@ package com.hooapps.pca.cvilleart.artfinder.activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
+import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
+import com.squareup.picasso.Picasso;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class VenueDetailActivity extends BaseActivity {
 
@@ -17,10 +25,24 @@ public class VenueDetailActivity extends BaseActivity {
     private ArtVenue venue;
     private SQLiteDatabase db;
 
+    @InjectView(R.id.venue_image)
+    ImageView imageView;
+    @InjectView(R.id.venue_name)
+    TextView nameView;
+    @InjectView(R.id.venue_address)
+    TextView addressView;
+    @InjectView(R.id.venue_category)
+    TextView categoryView;
+    @InjectView(R.id.venue_phone)
+    TextView phoneNumberView;
+    @InjectView(R.id.venue_description)
+    TextView descriptionView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue_detail);
+        ButterKnife.inject(this);
 
         db = MainApp.getDatabase();
 
@@ -36,6 +58,7 @@ public class VenueDetailActivity extends BaseActivity {
             return;
         }
         venue = fetchVenueData();
+        populateCardViews();
     }
 
     private ArtVenue fetchVenueData() {
@@ -76,6 +99,22 @@ public class VenueDetailActivity extends BaseActivity {
         artVenue.longitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LONGITUDE));
 
         return artVenue;
+    }
+
+    private void populateCardViews() {
+        int colorResId = ColorUtils.getColorForCategory(venue.primaryCategory);
+        // TODO SET IMAGE IN imageView with Picasso
+        imageView.setBackgroundColor(getResources().getColor(colorResId));
+        Picasso.with(this).load(venue.imageUrl).resize(400, 140).centerCrop().into(imageView);
+        nameView.setText(venue.organizationName);
+        nameView.requestFocus();
+        nameView.setSelected(true);
+        addressView.setText(venue.streetAddress);
+        categoryView.setText(venue.primaryCategory);
+        categoryView.setTextColor(getResources().getColor(colorResId));
+        phoneNumberView.setText(venue.phone);
+        phoneNumberView.setTextColor(getResources().getColor(colorResId));
+        descriptionView.setText(Html.fromHtml(venue.description));
     }
 
     @Override

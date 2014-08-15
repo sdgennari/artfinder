@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/li_body_padding"
         android:visibility="gone"
         android:background="@color/text_primary"
-        android:textColor="@color/text_header"
+        android:textColor="@color/text_white"
         android:singleLine="true"
         android:gravity="center_vertical"
         android:textSize="@dimen/text_header"/>

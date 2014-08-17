@@ -1,13 +1,17 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+}
+
 android {
-    compileSdkVersion 20
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         applicationId "com.hooapps.pca.cvilleart.artfinder"
         minSdkVersion 15
-        targetSdkVersion 20
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         renderscriptTargetApi = 19
@@ -22,7 +26,9 @@ android {
 }
 
 dependencies {
-    compile group: 'com.android.support', name: 'support-v4', version:'19.0.0'
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.google.android.gms:play-services:4.3.23'
+    compile 'com.willowtreeapps:oak-library:1.3.7@aar'
     compile 'com.jakewharton:butterknife:5.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.picasso:picasso:2.2.0'
@@ -31,17 +37,6 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.1'
     compile 'com.netflix.rxjava:rxjava-core:0.17.5'
     compile 'com.netflix.rxjava:rxjava-android:0.17.5'
-
-    compile(group: 'com.willowtreeapps', name: 'oak-library', version:'1.1.9') {
-        exclude(module: 'support-v4')
-        exclude(module: 'guava')
-        exclude(module: 'okhttp')
-        exclude(module: 'roboguice')
-        exclude(module: 'httpresponsecache')
-        exclude(module: 'disklrucache')
-    }
-    // compile 'com.google.android.gms:play-services:4.3.23'
-
-
+    compile 'com.willowtreeapps:oak-library:1.3.7@aar'
     // compile fileTree(dir: 'libs', include: ['*.jar'])
 }

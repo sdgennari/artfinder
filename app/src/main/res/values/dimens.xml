@@ -27,11 +27,11 @@
 
     <!-- Cards -->
     <dimen name="card_button_height">48dp</dimen>
-    <dimen name="card_header_height">32dp</dimen>
+    <dimen name="card_header_height">36dp</dimen>
 
     <dimen name="map_center_button_size">40dp</dimen>
     <dimen name="map_center_button_margin">12dp</dimen>
 
-    <!-- TODO USE THIS INSTEAD OF THE CONSTANT VALUE IN C.java -->
+    <!-- Misc. Dimensions -->
     <dimen name="image_thumb_size">48dp</dimen>
 </resources>

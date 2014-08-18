@@ -21,6 +21,22 @@
     <string name="venue_category">Category:</string>
     <string name="venue_phone_number">Phone Number:</string>
 
+    <string name="trans_start_point">My Location</string>
+    <string name="trans_destination_point">Destination</string>
+    <string name="trans_parking_garages">Parking Garages</string>
+    <string name="trans_notice_header">Notice</string>
+    <string name="trans_notice_text">This application launches Google Maps for directions.</string>
+    <string name="trans_cat_header">Charlottesville Area Transit</string>
+    <string name="trans_cat_text">CAT is a comprehensive public transportation system that services all of Charlottesville.
+        Search for "Charlottesville Area Transit" in the PlayStore or tap the icon to download their free app. \n
+        \n
+        For more information about parking or the CAT, visit charlottesvilleparking.com or charlottesville.org/transit.</string>
+    <string name="trans_cat_button">Get the CAT App</string>
+    <string name="trans_empty_destination">Please enter a destination.</string>
+    <string name="trans_water_street_garage">Water Street Garage</string>
+    <string name="trans_water_street_lot">Water Street Log</string>
+    <string name="trans_market_street_garage">Market Street Garage</string>
+
     <string-array name="nav_drawer_items">
         <item>@string/home</item>
         <item>@string/map</item>

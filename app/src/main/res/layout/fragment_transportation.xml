@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_container_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_card">
+
+        <LinearLayout
+            style="@style/card_base">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/venue_address"/>
+            
+            <AutoCompleteTextView
+                style="@style/card_subheader_text"
+                android:id="@+id/trans_start_auto_comp"
+                android:layout_width="match_parent"
+                android:hint="@string/trans_start_point"/>
+
+            <AutoCompleteTextView
+                style="@style/card_subheader_text"
+                android:id="@+id/trans_end_auto_comp"
+                android:layout_width="match_parent"
+                android:hint="@string/trans_destination_point"/>
+            
+            <View style="@style/card_divider"/>
+
+            <Button
+                style="@style/card_button"
+                android:id="@+id/trans_direction_button"
+                android:text="@string/venue_get_directions"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/card_base">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/trans_parking_garages"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:paddingLeft="@dimen/padding_card"
+                android:paddingRight="@dimen/padding_card"
+                android:paddingBottom="@dimen/padding_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/card_base">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/trans_notice_header"/>
+
+            <TextView
+                style="@style/card_body_text"
+                android:text="@string/trans_notice_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/card_base"
+            android:id="@+id/cat_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/image_thumb_size"
+                    android:layout_height="@dimen/image_thumb_size"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/margin_half"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_launcher"/>
+
+                <TextView
+                    style="@style/card_header_text"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/trans_cat_header"/>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/card_body_text"
+                android:text="@string/trans_cat_text"/>
+
+            <View style="@style/card_divider" />
+
+            <Button
+                style="@style/card_button"
+                android:id="@+id/trans_download_cat_button"
+                android:text="@string/trans_cat_button"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -28,8 +28,7 @@ public class VenueDatabaseIntentService extends IntentService {
 
     public VenueDatabaseIntentService() {
         super("VenueDatabaseIntentService");
-        PCASqliteHelper dbHelper = new PCASqliteHelper(MainApp.getContext());
-        db = dbHelper.getWritableDatabase();
+        db = MainApp.getDatabase();
     }
 
     @Override

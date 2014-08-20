@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.adapter.NavDrawerAdapter;
+import com.hooapps.pca.cvilleart.artfinder.api.EventDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueService;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
@@ -61,6 +62,9 @@ public class MainActivity extends BaseActivity {
 
         // Fetch ArtVenue data
         fetchArtVenueData();
+
+        // Fetch Event data
+        fetchEventData();
 
         // Configure the adapter to add items to the NavDrawer
         ArrayList<String> navDrawerItems = new ArrayList<String>(
@@ -140,5 +144,17 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, VenueDatabaseIntentService.class);
         intent.putExtra(C.EXT_WHERE_CLAUSE, whereClause);
         startService(intent);
+    }
+
+    private void fetchEventData() {
+        String maxTime = "2014-08-21T00:00:00Z";
+        String minTime = "2014-08-14T00:00:00Z";
+
+        Log.d("TEST", "max: " + maxTime);
+        Intent intent = new Intent(this, EventDatabaseIntentService.class);
+        intent.putExtra(C.EXT_MAX_TIME, maxTime);
+        intent.putExtra(C.EXT_MIN_TIME, minTime);
+        startService(intent);
+
     }
 }

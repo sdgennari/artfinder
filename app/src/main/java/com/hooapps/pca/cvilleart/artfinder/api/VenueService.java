@@ -19,7 +19,7 @@ public interface VenueService {
             "X-Parse-REST-API-Key: " + C.PARSE_REST_API_KEY
     })
     @GET("/1/classes/ArtVenue/&order=updatedAt")        // Sort by updatedAt to make last item in list most recent
-    public Observable<ArtVenueResponse> getAllArtVenues();
+    public ArtVenueResponse getAllArtVenues();
 
     // NOTE: date_string is of format: 2012-04-30T09:34:08.256Z
     @Headers({

@@ -19,7 +19,7 @@ public class EventTable {
             + TABLE_EVENTS
             + " ( "
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_EVENT_ID + " VARCHAR(60) NOT NULL, "
+            + COL_EVENT_ID + " VARCHAR(60) NOT NULL UNIQUE, "
             + COL_CATEGORY + " VARCHAR(20), "
             + COL_UPDATED + " INTEGER, "
             + COL_SUMMARY + " VARCHAR(255) NOT NULL, "

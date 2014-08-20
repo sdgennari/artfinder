@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_container_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_card">
+
+        <RelativeLayout
+            android:id="@+id/image_container"
+            style="@style/card_base"
+            android:layout_height="144dp">
+
+            <View
+                android:id="@+id/image_container_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+            <ImageView
+                android:id="@+id/event_image"
+                android:layout_width="wrap_content"
+                android:layout_height="96dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/li_header_height"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:gravity="center"
+                android:textSize="@dimen/text_header"
+                android:paddingTop="@dimen/padding_text"
+                android:paddingBottom="@dimen/padding_text"
+                android:paddingLeft="@dimen/padding_card"
+                android:paddingRight="@dimen/padding_card"
+                android:background="@color/black_overlay"
+                android:textColor="@color/text_white"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/card_base"
+            android:id="@+id/time_container">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/event_time"/>
+
+            <TextView
+                style="@style/card_body_text"
+                android:id="@+id/event_date"/>
+
+            <TextView
+                style="@style/card_body_text"
+                android:id="@+id/event_time"/>
+
+            <View style="@style/card_divider"/>
+
+            <Button
+                style="@style/card_button"
+                android:id="@+id/add_to_calendar_button"
+                android:text="@string/event_add_to_calendar"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/card_base"
+            android:id="@+id/address_container">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/event_address"/>
+
+            <TextView
+                style="@style/card_body_text"
+                android:id="@+id/event_address"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/card_base"
+            android:id="@+id/description_container">
+
+            <TextView
+                style="@style/card_header_text"
+                android:text="@string/event_description"/>
+
+            <TextView
+                style="@style/card_body_text"
+                android:id="@+id/event_description"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

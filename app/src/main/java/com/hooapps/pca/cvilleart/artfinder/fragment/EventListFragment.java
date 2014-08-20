@@ -1,6 +1,7 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,9 +17,12 @@ import android.widget.TextView;
 
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
+import com.hooapps.pca.cvilleart.artfinder.activity.EventDetailActivity;
 import com.hooapps.pca.cvilleart.artfinder.api.model.Event;
+import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.EventTable;
 import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
+import com.hooapps.pca.cvilleart.artfinder.util.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +62,9 @@ public class EventListFragment extends BaseFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        intent.putExtra(C.EXT_EVENT_ID, eventList.get(position).id);
+        startActivity(intent);
     }
 
     private void loadData() {
@@ -144,7 +150,10 @@ public class EventListFragment extends BaseFragment implements
             holder.timeContainerView.setBackgroundColor(getResources().getColor(colorResId));
 
             if (hasHeader(position)) {
-                holder.headerView.setText(getDateString(position));
+                c = Calendar.getInstance();
+                c.setTimeInMillis(event.unixStart);
+                String dateString = TimeUtils.createDateString(c);
+                holder.headerView.setText(dateString);
                 holder.headerView.setVisibility(View.VISIBLE);
             } else {
                 holder.headerView.setVisibility(View.GONE);
@@ -166,90 +175,6 @@ public class EventListFragment extends BaseFragment implements
             c.setTimeInMillis(previous.unixStart);
             int prevDay = c.get(Calendar.DAY_OF_MONTH);
             return prevDay != curDay;
-        }
-
-        private String getDateString(int position) {
-            Event event = getItem(position);
-            Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(event.unixStart);
-
-            String result = "";
-
-            // Find the day of the week
-            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-            switch (dayOfWeek) {
-                case Calendar.MONDAY:
-                    result += "Monday";
-                    break;
-                case Calendar.TUESDAY:
-                    result += "Tuesday";
-                    break;
-                case Calendar.WEDNESDAY:
-                    result += "Wednesday";
-                    break;
-                case Calendar.THURSDAY:
-                    result += "Thursday";
-                    break;
-                case Calendar.FRIDAY:
-                    result += "Friday";
-                    break;
-                case Calendar.SATURDAY:
-                    result += "Saturday";
-                    break;
-                case Calendar.SUNDAY:
-                    result += "Sunday";
-                    break;
-            }
-
-            result += ", ";
-
-            // Find the month
-            int month = c.get(Calendar.MONTH);
-            switch (month) {
-                case Calendar.JANUARY:
-                    result += "January";
-                    break;
-                case Calendar.FEBRUARY:
-                    result += "February";
-                    break;
-                case Calendar.MARCH:
-                    result += "March";
-                    break;
-                case Calendar.APRIL:
-                    result += "April";
-                    break;
-                case Calendar.MAY:
-                    result += "May";
-                    break;
-                case Calendar.JUNE:
-                    result += "June";
-                    break;
-                case Calendar.JULY:
-                    result += "July";
-                    break;
-                case Calendar.AUGUST:
-                    result += "August";
-                    break;
-                case Calendar.SEPTEMBER:
-                    result += "September";
-                    break;
-                case Calendar.OCTOBER:
-                    result += "October";
-                    break;
-                case Calendar.NOVEMBER:
-                    result += "November";
-                    break;
-                case Calendar.DECEMBER:
-                    result += "December";
-                    break;
-            }
-
-            result += " ";
-
-            // Add the date
-            result += c.get(Calendar.DAY_OF_MONTH);
-
-            return result;
         }
     }
 

@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
 
     <application
         android:name="com.hooapps.pca.cvilleart.artfinder.MainApp"
@@ -30,6 +32,9 @@
         </activity>
 
         <activity android:name=".activity.VenueDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.EventDetailActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name=".api.VenueDatabaseIntentService"

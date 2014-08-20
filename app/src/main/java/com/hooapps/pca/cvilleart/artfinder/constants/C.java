@@ -27,6 +27,7 @@ public class C {
     public static final String EXT_PARSE_OBJECT_ID_LIST = "ext_parse_object_id_list";
     public static final String EXT_MAX_TIME = "max_time";
     public static final String EXT_MIN_TIME = "min_time";
+    public static final String EXT_EVENT_ID = "event_id";
 
     // Image dimensions
     public static final int THUMB_SIZE = 48 * 3;    // Save 48 px thumbnails in xhdpi

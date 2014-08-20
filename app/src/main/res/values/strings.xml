@@ -21,6 +21,11 @@
     <string name="venue_category">Category:</string>
     <string name="venue_phone_number">Phone Number:</string>
 
+    <string name="event_time">Time</string>
+    <string name="event_address">Address</string>
+    <string name="event_description">Description</string>
+    <string name="event_add_to_calendar">Add to Calendar</string>
+
     <string name="trans_start_point">My Location</string>
     <string name="trans_destination_point">Destination</string>
     <string name="trans_parking_garages">Parking Garages</string>

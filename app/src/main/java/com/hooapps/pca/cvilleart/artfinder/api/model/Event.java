@@ -41,6 +41,9 @@ public class Event {
     @SerializedName("end")
     public End end;
 
+    public long unixStart;
+    public long unixEnd;
+
     public class Start {
         public String dateTime;
         public String timeZone;
@@ -59,9 +62,9 @@ public class Event {
             if (start.dateTime != null) {
                 Date date = dateTimeFormat.parse(start.dateTime.substring(0, 19).replaceAll("[a-zA-Z]", " ").trim());
                 return date.getTime();
-            } else if (start.date != null) {
-                Date date = dateFormat.parse(start.date);
-                return date.getTime();
+//            } else if (start.date != null) {
+//                Date date = dateFormat.parse(start.date);
+//                return date.getTime();
             }
         } catch (ParseException e) {
             Log.e(MainApp.TAG, e.getLocalizedMessage());
@@ -74,9 +77,9 @@ public class Event {
             if (end.dateTime != null) {
                 Date date = dateTimeFormat.parse(end.dateTime.substring(0, 19).replaceAll("[a-zA-Z]", " ").trim());
                 return date.getTime();
-            } else if (end.date != null) {
-                Date date = dateFormat.parse(end.date);
-                return date.getTime();
+//            } else if (end.date != null) {
+//                Date date = dateFormat.parse(end.date);
+//                return date.getTime();
             }
         } catch (ParseException e) {
             Log.e(MainApp.TAG, e.getLocalizedMessage());

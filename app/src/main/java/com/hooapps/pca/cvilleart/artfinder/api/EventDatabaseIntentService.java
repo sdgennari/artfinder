@@ -114,9 +114,11 @@ public class EventDatabaseIntentService extends IntentService {
         Log.d("TEST", "Event Size: " + eventList.size());
 
         for (Event event : eventList) {
-            values = makeContentValuesFromObject(event);
-            // Insert or update the columns
-            db.insertWithOnConflict(EventTable.TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            if (event.getStartTime() != 0) {
+                values = makeContentValuesFromObject(event);
+                // Insert or update the columns
+                db.insertWithOnConflict(EventTable.TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            }
         }
         db.setTransactionSuccessful();
         db.endTransaction();

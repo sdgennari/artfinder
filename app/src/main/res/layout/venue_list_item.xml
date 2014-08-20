@@ -21,7 +21,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/li_body_height"
         android:paddingLeft="@dimen/li_body_padding"
         android:paddingRight="@dimen/li_body_padding"
         android:paddingTop="@dimen/li_body_padding_half"

@@ -8,7 +8,7 @@
     <dimen name="shadow_padding_bottom">3px</dimen>
 
     <!-- List Items-->
-    <dimen name="li_body_height">72dp</dimen>
+    <dimen name="li_body_height">64dp</dimen>
     <dimen name="li_header_height">48dp</dimen>
     <dimen name="li_item_size">48dp</dimen>
     <dimen name="li_body_size">72dp</dimen>

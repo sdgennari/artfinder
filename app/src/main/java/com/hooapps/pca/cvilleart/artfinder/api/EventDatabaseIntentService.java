@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.api.model.Event;
 import com.hooapps.pca.cvilleart.artfinder.api.model.EventResponse;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.EventTable;
+import com.hooapps.pca.cvilleart.artfinder.util.TimeUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -30,7 +33,6 @@ public class EventDatabaseIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("TEST", "onHandleIntent");
         eventService = initEventService();
 
         String maxTime = intent.getStringExtra(C.EXT_MAX_TIME);
@@ -38,7 +40,6 @@ public class EventDatabaseIntentService extends IntentService {
 
         Log.d("TEST", "max: " + maxTime);
 
-        Log.d("TEST", "Dance");
         // Dance
         EventResponse response = eventService.getDanceEvents(maxTime, minTime);
         for (Event event : response.items) {
@@ -46,7 +47,6 @@ public class EventDatabaseIntentService extends IntentService {
         }
         eventList.addAll(response.items);
 
-        Log.d("TEST", "Family");
         // Family
         response = eventService.getFamilyEvents(maxTime, minTime);
         for (Event event : response.items) {
@@ -90,6 +90,7 @@ public class EventDatabaseIntentService extends IntentService {
         eventList.addAll(response.items);
 
         insertEvents();
+        deleteOldEvents();
     }
 
     private EventService initEventService() {
@@ -101,7 +102,19 @@ public class EventDatabaseIntentService extends IntentService {
     }
 
     private void deleteOldEvents() {
-        // TODO CLEAR OLD EVENTS FROM THE DATABASE
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+
+        // Set the calendar to the morning of the current day
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
+        int del = db.delete(EventTable.TABLE_EVENTS,
+                EventTable.COL_START_TIME + " < " + (c.getTimeInMillis()),
+                null);
+
+        Log.d("TEST", "Deleted " + del + " events");
     }
 
     private void insertEvents() {
@@ -114,11 +127,9 @@ public class EventDatabaseIntentService extends IntentService {
         Log.d("TEST", "Event Size: " + eventList.size());
 
         for (Event event : eventList) {
-            if (event.getStartTime() != 0) {
-                values = makeContentValuesFromObject(event);
-                // Insert or update the columns
-                db.insertWithOnConflict(EventTable.TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-            }
+            values = makeContentValuesFromObject(event);
+            // Insert or update the columns
+            db.insertWithOnConflict(EventTable.TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
         db.setTransactionSuccessful();
         db.endTransaction();
@@ -132,8 +143,8 @@ public class EventDatabaseIntentService extends IntentService {
         values.put(EventTable.COL_SUMMARY, event.summary);
         values.put(EventTable.COL_DESCRIPTION, event.description);
         values.put(EventTable.COL_LOCATION, event.location);
-        values.put(EventTable.COL_START_TIME, event.getStartTime());
-        values.put(EventTable.COL_END_TIME, event.getEndTime());
+        values.put(EventTable.COL_START_TIME, TimeUtils.parseUnixFromDate(event.start.dateTime));
+        values.put(EventTable.COL_END_TIME, TimeUtils.parseUnixFromDate(event.end.dateTime));
         return values;
     }
 }

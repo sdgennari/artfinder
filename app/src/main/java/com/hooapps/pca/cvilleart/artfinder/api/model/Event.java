@@ -55,35 +55,4 @@ public class Event {
         public String timeZone;
         public String date;
     }
-
-    public long getStartTime() {
-        //2013-06-02T10:00:00-04:00
-        try {
-            if (start.dateTime != null) {
-                Date date = dateTimeFormat.parse(start.dateTime.substring(0, 19).replaceAll("[a-zA-Z]", " ").trim());
-                return date.getTime();
-//            } else if (start.date != null) {
-//                Date date = dateFormat.parse(start.date);
-//                return date.getTime();
-            }
-        } catch (ParseException e) {
-            Log.e(MainApp.TAG, e.getLocalizedMessage());
-        }
-        return 0;
-    }
-
-    public long getEndTime() {
-        try {
-            if (end.dateTime != null) {
-                Date date = dateTimeFormat.parse(end.dateTime.substring(0, 19).replaceAll("[a-zA-Z]", " ").trim());
-                return date.getTime();
-//            } else if (end.date != null) {
-//                Date date = dateFormat.parse(end.date);
-//                return date.getTime();
-            }
-        } catch (ParseException e) {
-            Log.e(MainApp.TAG, e.getLocalizedMessage());
-        }
-        return 0;
-    }
 }

@@ -26,9 +26,13 @@ import com.hooapps.pca.cvilleart.artfinder.fragment.MapFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.TransportationFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.VenueListFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,20 +40,18 @@ import rx.Subscription;
 
 public class MainActivity extends BaseActivity {
 
+    private static final long MS_PER_60_DAYS = 1000L * 60 * 60 * 24 * 60;
+
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     @InjectView(R.id.nav_drawer)
     ListView navDrawer;
 
-    private VenueService venueService;
     private Datastore datastore;
 
     private NavDrawerAdapter navDrawerAdapter;
     private ActionBarDrawerToggle drawerToggle;
-
-    private Subscription artVenueFetchTask;
-    private List<ArtVenue> artVenueList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -147,8 +149,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void fetchEventData() {
-        String maxTime = "2014-08-21T00:00:00Z";
-        String minTime = "2014-08-14T00:00:00Z";
+//        String maxTime = "2014-08-21T00:00:00Z";
+//        String minTime = "2014-08-14T00:00:00Z";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Calendar c = Calendar.getInstance();
+
+        c.setTimeInMillis(System.currentTimeMillis());
+        String minTime = sdf.format(new Date(c.getTimeInMillis())) + C.EVENT_URL_TIME_ZONE;
+        String maxTime = sdf.format(new Date(c.getTimeInMillis() + MS_PER_60_DAYS)) + C.EVENT_URL_TIME_ZONE;
 
         Log.d("TEST", "max: " + maxTime);
         Intent intent = new Intent(this, EventDatabaseIntentService.class);

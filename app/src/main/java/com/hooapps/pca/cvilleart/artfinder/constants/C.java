@@ -18,6 +18,7 @@ public class C {
 
     // Constant values
     public static final String DEFAULT_UPDATED_AT_TIME = "2014-01-01T00:00:00.000Z";
+    public static final String EVENT_URL_TIME_ZONE = "T00:00:00Z";
 
     // Strings for passing Extras in intents
     public static final String EXT_WHERE_CLAUSE = "ext_where_clause";

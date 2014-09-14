@@ -19,4 +19,20 @@ public class ColorUtils {
         }
         return colorResId;
     }
+
+    public static int getColorDrawableForCategory(String category) {
+        int drawableResId;
+        if (category.equalsIgnoreCase("dance")) {
+            drawableResId = R.drawable.bg_green;
+        } else if (category.equalsIgnoreCase("gallery")) {
+            drawableResId = R.drawable.bg_blue;
+        } else if (category.equalsIgnoreCase("music")) {
+            drawableResId = R.drawable.bg_orange;
+        } else if (category.equalsIgnoreCase("theatre")) {
+            drawableResId = R.drawable.bg_purple;
+        } else {
+            drawableResId = R.drawable.bg_indigo;
+        }
+        return drawableResId;
+    }
 }

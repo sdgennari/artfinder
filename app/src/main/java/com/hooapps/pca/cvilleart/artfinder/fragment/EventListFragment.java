@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -117,7 +119,9 @@ public class EventListFragment extends BaseFragment implements
                 holder.headerView = (TextView) convertView.findViewById(R.id.event_header);
                 holder.nameView = (TextView) convertView.findViewById(R.id.event_name);
                 holder.categoryView = (TextView) convertView.findViewById(R.id.event_category);
-                holder.timeView = (TextView) convertView.findViewById(R.id.time);
+//                holder.timeView = (TextView) convertView.findViewById(R.id.time);
+                holder.hourView = (TextView) convertView.findViewById(R.id.hour);
+                holder.minuteView = (TextView) convertView.findViewById(R.id.minute);
                 holder.timePeriodView = (TextView) convertView.findViewById(R.id.time_period);
                 holder.timeContainerView = (RelativeLayout) convertView.findViewById(R.id.time_container);
                 convertView.setTag(holder);
@@ -138,7 +142,8 @@ public class EventListFragment extends BaseFragment implements
             if (hours > 12) {
                 formattedHours = hours % 12;
             }
-            holder.timeView.setText(String.format("% 2d", formattedHours) + ":" + String.format("%02d", minutes));
+            holder.hourView.setText(String.format("% 2d", formattedHours));
+            holder.minuteView.setText(String.format("%02d", minutes));
 
             if (hours/12 == 0) {
                 holder.timePeriodView.setText("AM");
@@ -146,8 +151,8 @@ public class EventListFragment extends BaseFragment implements
                 holder.timePeriodView.setText("PM");
             }
 
-            int colorResId = ColorUtils.getColorForCategory(event.category);
-            holder.timeContainerView.setBackgroundColor(getResources().getColor(colorResId));
+            int drawableResId = ColorUtils.getColorDrawableForCategory(event.category);
+            holder.timeContainerView.setBackgroundResource(drawableResId);
 
             if (hasHeader(position)) {
                 c = Calendar.getInstance();
@@ -182,7 +187,8 @@ public class EventListFragment extends BaseFragment implements
         TextView headerView;
         TextView nameView;
         TextView categoryView;
-        TextView timeView;
+        TextView hourView;
+        TextView minuteView;
         TextView timePeriodView;
         RelativeLayout timeContainerView;
     }

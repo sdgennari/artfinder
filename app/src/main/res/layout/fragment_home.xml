@@ -22,25 +22,25 @@
         <Button
             android:id="@+id/button_map"
             style="@style/button_base"
-            android:background="@color/green"
+            android:background="@drawable/bg_green_item"
             android:text="@string/map" />
 
         <Button
             android:id="@+id/button_venue"
             style="@style/button_base"
-            android:background="@color/orange"
+            android:background="@drawable/bg_orange_item"
             android:text="@string/venues" />
 
         <Button
             android:id="@+id/button_event"
             style="@style/button_base"
-            android:background="@color/blue"
+            android:background="@drawable/bg_blue_item"
             android:text="@string/events" />
 
         <Button
             android:id="@+id/button_transportation"
             style="@style/button_base"
-            android:background="@color/purple"
+            android:background="@drawable/bg_purple_item"
             android:text="@string/transportation" />
     </LinearLayout>
 

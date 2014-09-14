@@ -38,7 +38,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import rx.Subscription;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements
+        HomeFragment.OnHomeFragmentButtonSelectedListener {
 
     private static final long MS_PER_60_DAYS = 1000L * 60 * 60 * 24 * 60;
 
@@ -127,6 +128,20 @@ public class MainActivity extends BaseActivity {
                     break;
             }
             drawerLayout.closeDrawers();
+        }
+    }
+
+    @Override
+    public void onHomeFragmentButtonSelected(int n) {
+        switch(n) {
+            case C.HOME_MAP: swapFragment(new MapFragment());
+                break;
+            case C.HOME_VENUE: swapFragment(new VenueListFragment());
+                break;
+            case C.HOME_EVENT: swapFragment(new EventListFragment());
+                break;
+            case C.HOME_TRANS: swapFragment(new TransportationFragment());
+                break;
         }
     }
 

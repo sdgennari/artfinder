@@ -14,6 +14,11 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_closed">Drawer Closed</string>
 
+    <string name="home_map">Map</string>
+    <string name="home_venue">Venue</string>
+    <string name="home_event">Event</string>
+    <string name="home_trans">Transportation</string>
+
     <string name="venue_view_on_map">View on Map</string>
     <string name="venue_get_directions">Get Directions</string>
     <string name="venue_address">Address</string>
@@ -39,7 +44,7 @@
     <string name="trans_cat_button">Get the CAT App</string>
     <string name="trans_empty_destination">Please enter a destination.</string>
     <string name="trans_water_street_garage">Water Street Garage</string>
-    <string name="trans_water_street_lot">Water Street Log</string>
+    <string name="trans_water_street_lot">Water Street Lot</string>
     <string name="trans_market_street_garage">Market Street Garage</string>
 
     <string-array name="nav_drawer_items">

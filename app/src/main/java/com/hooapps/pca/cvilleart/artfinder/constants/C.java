@@ -7,6 +7,12 @@ public class C {
 //    public static final String GOOGLE_API_KEY = "AIzaSyBO0jw8GkVNmk-Igx5jPZkRiwHm6MzH1oY";
     public static final String GOOGLE_API_KEY = "AIzaSyDegSazDw-VcXQtWyVDmsDiV-xgwaT9ijE";
 
+    // Home Button IDs
+    public static final int HOME_MAP = 0;
+    public static final int HOME_VENUE = 1;
+    public static final int HOME_EVENT = 2;
+    public static final int HOME_TRANS = 3;
+
     // Google Calendar IDs
     public static final String CALENDAR_ID_FAMILY = "/charlottesvillearts.org_1d75dtbvjd8adgei0borv0dp30@group.calendar.google.com";
     public static final String CALENDAR_ID_MUSIC = "/charlottesvillearts.org_9oapvu67eckm7hkbm22p8debtc@group.calendar.google.com";

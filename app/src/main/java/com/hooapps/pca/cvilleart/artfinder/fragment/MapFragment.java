@@ -69,7 +69,9 @@ GooglePlayServicesClient.OnConnectionFailedListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+        if (mapView != null) {
+            mapView.onSaveInstanceState(outState);
+        }
     }
 
     @Override
@@ -120,10 +122,10 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mapView != null) {
             mapView.onDestroy();
         }
+        super.onDestroy();
     }
 
     private boolean servicesConnected() {

@@ -32,7 +32,7 @@ public class BlurTransform implements Transformation {
             script.setInput(inAlloc);
 
             // Set the blur radius
-            script.setRadius(25f);
+            script.setRadius(15f);
 
             // Run the blur script
             script.forEach(outAlloc);

@@ -1,7 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,8 +20,8 @@ import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.activity.VenueDetailActivity;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
-import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
+import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -122,10 +121,16 @@ public class VenueListFragment extends BaseFragment implements
 
             holder.nameView.setText(getItem(position).organizationName);
 
-            // TODO HANDLE IMAGE
-            // TODO LOAD IMAGE FROM FILE
+            int drawableResId = ColorUtils.getVenueDrawableForCategory(getItem(position).primaryCategory);
             if (getItem(position).imageUrl != null && !getItem(position).imageUrl.isEmpty()) {
-                Picasso.with(context).load(getItem(position).imageUrl).resize(C.THUMB_SIZE, C.THUMB_SIZE).centerCrop().into(holder.imageView);
+                Picasso.with(context).load(getItem(position).imageUrl)
+                        .placeholder(drawableResId)
+                        .resize(C.THUMB_SIZE, C.THUMB_SIZE)
+                        .centerCrop()
+                        .into(holder.imageView);
+            } else {
+                Picasso.with(context).load(drawableResId)
+                        .into(holder.imageView);
             }
 
 

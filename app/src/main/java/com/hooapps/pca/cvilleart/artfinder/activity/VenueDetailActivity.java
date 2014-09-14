@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class VenueDetailActivity extends BaseActivity {
     private SQLiteDatabase db;
 
     @InjectView(R.id.venue_image)
+    ImageView bgImageView;
+    @InjectView(R.id.venue_category_image)
     ImageView imageView;
     @InjectView(R.id.venue_name)
     TextView nameView;
@@ -47,18 +50,22 @@ public class VenueDetailActivity extends BaseActivity {
 
         db = MainApp.getDatabase();
 
-        // Make the ActionBar title clickable
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
-        }
-
         parseObjectId = getIntent().getStringExtra(C.EXT_PARSE_OBJECT_ID);
         if (parseObjectId == null || parseObjectId.isEmpty()) {
             // TODO HANDLE ERROR HERE
             return;
         }
         venue = fetchVenueData();
+
+        // Customize the ActionBar based on the venue
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(
+                    ColorUtils.getColorDrawableForCategory(venue.primaryCategory)));
+            getActionBar().setIcon(ColorUtils.getVenueDrawableForCategory(venue.primaryCategory));
+        }
+
         populateCardViews();
     }
 
@@ -74,9 +81,6 @@ public class VenueDetailActivity extends BaseActivity {
                 VenueTable.COL_DESCRIPTION,
                 VenueTable.COL_LATITUDE,
                 VenueTable.COL_LONGITUDE,
-
-                // TODO TEMPORARILY GET THE IMAGE URL
-                // IN THE FUTURE, LOAD THE IMAGE VIA RESOURCES
                 VenueTable.COL_IMAGE_URL
         };
 
@@ -102,9 +106,6 @@ public class VenueDetailActivity extends BaseActivity {
         artVenue.description = c.getString(c.getColumnIndex(VenueTable.COL_DESCRIPTION));
         artVenue.latitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LATITUDE));
         artVenue.longitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LONGITUDE));
-
-        // TODO TEMPORARILY GET THE IMAGE URL
-        // IN THE FUTURE, LOAD THE IMAGE VIA RESOURCES
         artVenue.imageUrl = c.getString(c.getColumnIndex(VenueTable.COL_IMAGE_URL));
 
         return artVenue;
@@ -112,9 +113,18 @@ public class VenueDetailActivity extends BaseActivity {
 
     private void populateCardViews() {
         int colorResId = ColorUtils.getColorForCategory(venue.primaryCategory);
-        // TODO SET IMAGE IN imageView with Picasso
-        imageView.setBackgroundColor(getResources().getColor(colorResId));
-        Picasso.with(this).load(venue.imageUrl).resize(400, 140).centerCrop().transform(new BlurTransform(this)).into(imageView);
+        int placeholderResId = ColorUtils.getVenueDrawableForCategory(venue.primaryCategory);
+        bgImageView.setBackgroundColor(getResources().getColor(colorResId));
+        if (venue.imageUrl != null && !venue.imageUrl.isEmpty()) {
+            imageView.setVisibility(View.GONE);
+            Picasso.with(this).load(venue.imageUrl)
+                    .resize(400, 140)
+                    .centerCrop()
+                    .transform(new BlurTransform(this)).into(bgImageView);
+        } else {
+            imageView.setVisibility(View.VISIBLE);
+            Picasso.with(this).load(placeholderResId).into(imageView);
+        }
         nameView.setText(venue.organizationName);
         nameView.requestFocus();
         nameView.setSelected(true);

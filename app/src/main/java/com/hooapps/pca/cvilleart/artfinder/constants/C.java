@@ -38,4 +38,12 @@ public class C {
 
     // Image dimensions
     public static final int THUMB_SIZE = 48 * 3;    // Save 48 px thumbnails in xhdpi
+
+
+    // Map marker sizes
+    // mdpi     = 48px
+    // hdpi     = 72px  = 48 * 1.5
+    // xhdpi    = 96px  = 48 * 2
+    // xhdpi    = 144px = 48 * 3
+
 }

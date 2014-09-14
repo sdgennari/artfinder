@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -222,11 +223,11 @@ GooglePlayServicesClient.OnConnectionFailedListener {
             venue.longitude = cursor.getDouble(cursor.getColumnIndex(VenueTable.COL_LONGITUDE));
             venue.imageUrl = cursor.getString(cursor.getColumnIndex(VenueTable.COL_IMAGE_URL));
 
-            int colorResId = ColorUtils.getColorForCategory(venue.primaryCategory);
+            int drawableResId = ColorUtils.getMarkerDrawableForCategory(venue.primaryCategory);
             MarkerOptions options = new MarkerOptions().title(venue.organizationName)
                     .snippet(venue.streetAddress)
                     .position(new LatLng(venue.latitude, venue.longitude))
-                    //.icon(BitmapDescriptorFactory.fromResource(colorResId))
+                    .icon(BitmapDescriptorFactory.fromResource(drawableResId))
                     .anchor(0.5f, 1.0f);
             Marker marker = map.addMarker(options);
 

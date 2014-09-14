@@ -65,17 +65,21 @@ public class EventDetailActivity extends BaseActivity {
 
         db = MainApp.getDatabase();
 
-        // Make the ActionBar title clickable
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
-        }
-
         eventId = getIntent().getStringExtra(C.EXT_EVENT_ID);
         if (eventId == null || eventId.isEmpty()) {
             // TODO HANDLE ERROR HERE
         }
         event = fetchEventData();
+
+        // Customize the ActionBar based on the event category
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(
+                    ColorUtils.getColorDrawableForCategory(event.category)));
+            getActionBar().setIcon(ColorUtils.getVenueDrawableForCategory(event.category));
+        }
+
         populateCardViews();
     }
 
@@ -115,8 +119,11 @@ public class EventDetailActivity extends BaseActivity {
     private void populateCardViews() {
         int colorResId = ColorUtils.getColorForCategory(event.category);
         imageContainerBackground.setBackgroundColor(getResources().getColor(colorResId));
-        Picasso.with(this).load(R.drawable.ic_launcher).into(imageView);
+        int drawableResId = ColorUtils.getVenueDrawableForCategory(event.category);
+        Picasso.with(this).load(drawableResId).into(imageView);
         nameView.setText(event.summary);
+        nameView.requestFocus();
+        nameView.setSelected(true);
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(event.unixStart);
         dateView.setText(TimeUtils.createDateString(c));

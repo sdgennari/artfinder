@@ -28,13 +28,13 @@
         <Button
             android:id="@+id/button_venue"
             style="@style/button_base"
-            android:background="@color/deep_orange"
+            android:background="@color/orange"
             android:text="@string/venues" />
 
         <Button
             android:id="@+id/button_event"
             style="@style/button_base"
-            android:background="@color/teal"
+            android:background="@color/blue"
             android:text="@string/events" />
 
         <Button

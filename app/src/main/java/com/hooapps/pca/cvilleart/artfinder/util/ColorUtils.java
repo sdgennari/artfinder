@@ -9,9 +9,9 @@ public class ColorUtils {
         if (category.equalsIgnoreCase("dance")) {
             colorResId = R.color.green;
         } else if (category.equalsIgnoreCase("gallery")) {
-            colorResId = R.color.teal;
+            colorResId = R.color.blue;
         } else if (category.equalsIgnoreCase("music")) {
-            colorResId = R.color.deep_orange;
+            colorResId = R.color.orange;
         } else if (category.equalsIgnoreCase("theatre")) {
             colorResId = R.color.purple;
         } else {

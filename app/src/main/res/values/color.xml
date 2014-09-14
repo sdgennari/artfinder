@@ -16,10 +16,20 @@
     <color name="shadow">#1E000000</color>
     <color name="black_overlay">#AA000000</color>
 
-    <color name="green">#FF259b24</color>
-    <color name="teal">#FF009688</color>
-    <color name="purple">#FF9c27b0</color>
-    <color name="indigo">#FF3f51b5</color>
-    <color name="deep_orange">#FFff5722</color>
+    <!-- Theme colors -->
+    <color name="blue">#FF3296B8</color>
+    <color name="dark_blue">#FF2B819E</color>
+
+    <color name="green">#FF30A81B</color>
+    <color name="dark_green">#FF298E17</color>
+
+    <color name="orange">#FFEB5328</color>
+    <color name="dark_orange">#FFD14A24</color>
+
+    <color name="indigo">#FF26235C</color>
+    <color name="dark_indigo">#FF1B1942</color>
+
+    <color name="purple">#FFBF3E81</color>
+    <color name="dark_purple">#FFA53670</color>
 
 </resources>

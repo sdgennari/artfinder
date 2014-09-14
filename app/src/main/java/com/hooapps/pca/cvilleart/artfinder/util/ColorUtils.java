@@ -35,4 +35,36 @@ public class ColorUtils {
         }
         return drawableResId;
     }
+
+    public static int getVenueDrawableForCategory(String category) {
+        int drawableResId;
+        if (category.equalsIgnoreCase("dance")) {
+            drawableResId = R.drawable.dance;
+        } else if (category.equalsIgnoreCase("gallery")) {
+            drawableResId = R.drawable.gallery;
+        } else if (category.equalsIgnoreCase("music")) {
+            drawableResId = R.drawable.music;
+        } else if (category.equalsIgnoreCase("theatre")) {
+            drawableResId = R.drawable.theatre;
+        } else {
+            drawableResId = R.drawable.other;
+        }
+        return drawableResId;
+    }
+
+    public static int getMarkerDrawableForCategory(String category) {
+        int drawableResId;
+        if (category.equalsIgnoreCase("dance")) {
+            drawableResId = R.drawable.marker_dance;
+        } else if (category.equalsIgnoreCase("gallery")) {
+            drawableResId = R.drawable.marker_gallery;
+        } else if (category.equalsIgnoreCase("music")) {
+            drawableResId = R.drawable.marker_music;
+        } else if (category.equalsIgnoreCase("theatre")) {
+            drawableResId = R.drawable.marker_theatre;
+        } else {
+            drawableResId = R.drawable.marker_other;
+        }
+        return drawableResId;
+    }
 }

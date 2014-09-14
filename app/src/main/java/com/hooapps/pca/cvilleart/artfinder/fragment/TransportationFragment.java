@@ -152,17 +152,25 @@ public class TransportationFragment extends BaseFragment {
         map.getUiSettings().setAllGesturesEnabled(false);
         map.getUiSettings().setScrollGesturesEnabled(true);
 
-        // TODO ADD MARKER ASSETS
         // Add the markers to the map
-        MarkerOptions options = new MarkerOptions().title(getString(R.string.trans_water_street_garage)).position(waterStreetGarage).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)).anchor(0.50F, 1.0F);
+        MarkerOptions options = new MarkerOptions().title(getString(R.string.trans_water_street_garage))
+                .position(waterStreetGarage)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_garage))
+                .anchor(0.50F, 1.0F);
         venueAddressHashMap.put(getString(R.string.trans_water_street_garage), waterStreetGarage.latitude + ", " + waterStreetGarage.longitude);
         markers.add(map.addMarker(options));
 
-        options = new MarkerOptions().title(getString(R.string.trans_water_street_lot)).position(waterStreetLot).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)).anchor(0.50F, 1.0F);
+        options = new MarkerOptions().title(getString(R.string.trans_water_street_lot))
+                .position(waterStreetLot)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_garage))
+                .anchor(0.50F, 1.0F);
         venueAddressHashMap.put(getString(R.string.trans_water_street_lot), waterStreetLot.latitude + ", " + waterStreetLot.longitude);
         markers.add(map.addMarker(options));
 
-        options = new MarkerOptions().title(getString(R.string.trans_market_street_garage)).position(marketStreetGarage).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher)).anchor(0.50F, 1.0F);
+        options = new MarkerOptions().title(getString(R.string.trans_market_street_garage))
+                .position(marketStreetGarage)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_garage))
+                .anchor(0.50F, 1.0F);
         venueAddressHashMap.put(getString(R.string.trans_market_street_garage), marketStreetGarage.latitude + ", " + marketStreetGarage.longitude);
         markers.add(map.addMarker(options));
 
@@ -179,7 +187,7 @@ public class TransportationFragment extends BaseFragment {
         for (Marker m : markers) {
             builder.include(m.getPosition());
         }
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
     }
 
     @Override

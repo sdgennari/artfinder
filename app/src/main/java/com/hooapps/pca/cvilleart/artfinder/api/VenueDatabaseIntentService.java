@@ -119,6 +119,11 @@ public class VenueDatabaseIntentService extends IntentService {
     }
 
     private ContentValues makeContentValuesFromObject(ArtVenue venue) {
+        // Override the category for literary events
+        if (venue.primaryCategory.equalsIgnoreCase("literary")) {
+            venue.primaryCategory = "venue";
+        }
+
         ContentValues values = new ContentValues();
         values.put(VenueTable.COL_PARSE_OBJECT_ID, venue.parseObjectId);
         values.put(VenueTable.COL_CITY, venue.city);

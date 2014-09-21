@@ -15,6 +15,7 @@
         android:layout_height="@dimen/map_center_button_size"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/map_center_button_margin"/>
+        android:layout_margin="@dimen/map_center_button_margin"
+        android:background="@drawable/map_button_bg"/>
 
 </RelativeLayout>

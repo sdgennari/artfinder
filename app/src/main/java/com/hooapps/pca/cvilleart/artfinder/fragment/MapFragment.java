@@ -251,10 +251,18 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
             ImageView imageView = (ImageView) v.findViewById(R.id.venue_image);
             ArtVenue venue = venueMarkerHashMap.get(marker);
-            int colorResId = ColorUtils.getColorForCategory(venue.primaryCategory);
 
+            int drawableResId = ColorUtils.getVenueDrawableForCategory(venue.primaryCategory);
             if (venue.imageUrl != null && !venue.imageUrl.isEmpty()) {
-                Picasso.with(getActivity()).load(venue.imageUrl).resize(C.THUMB_SIZE, C.THUMB_SIZE).centerCrop().into(imageView);
+                Picasso.with(getActivity()).load(venue.imageUrl)
+                        .placeholder(drawableResId)
+                        .resize(C.THUMB_SIZE, C.THUMB_SIZE)
+                        .centerCrop().into(imageView);
+            } else {
+                Picasso.with(getActivity()).load(drawableResId)
+                        .placeholder(drawableResId)
+                        .resize(C.THUMB_SIZE, C.THUMB_SIZE)
+                        .into(imageView);
             }
 
             return v;

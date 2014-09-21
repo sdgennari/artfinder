@@ -3,6 +3,7 @@ package com.hooapps.pca.cvilleart.artfinder.activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -77,30 +78,41 @@ public class MainActivity extends BaseActivity implements
 
         navDrawer.setOnItemClickListener(new NavDrawerListener());
 
-        // Bind the DrawerToggle with the Drawer
-        // TODO UPDATE THE ICON
-        drawerToggle = new ActionBarDrawerToggle(
-                this,                       // Activity
-                drawerLayout,               // DrawerLayout
-                R.drawable.ic_launcher,     // Image to replace arrow icon
-                R.string.drawer_open,       // Open description
-                R.string.drawer_closed      // Closed description
-        ) {
-            // TODO HANDLE DRAWER TOGGLE EVENTS HERE
-        };
-        drawerLayout.setDrawerListener(drawerToggle);
-
         // Make the ActionBar title clickable
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setHomeButtonEnabled(true);
         }
 
+        // Bind the DrawerToggle with the Drawer
+        drawerToggle = new ActionBarDrawerToggle(
+                this,                       // Activity
+                drawerLayout,               // DrawerLayout
+                R.drawable.ic_nav_drawer,   // Image to replace arrow icon
+                R.string.drawer_open,       // Open description
+                R.string.drawer_closed      // Closed description
+        ) {
+            // Handle drawer toggle events here
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+
         // Add the home screen fragment to the activity
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.replace(R.id.content_frame, new HomeFragment());
         ft.commit();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override

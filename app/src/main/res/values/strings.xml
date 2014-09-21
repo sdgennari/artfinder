@@ -11,8 +11,8 @@
     <string name="events">Events</string>
     <string name="transportation">Transportation</string>
 
-    <string name="drawer_open">Drawer Open</string>
-    <string name="drawer_closed">Drawer Closed</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_closed">Open Drawer</string>
 
     <string name="home_map">Map</string>
     <string name="home_venue">Venue</string>

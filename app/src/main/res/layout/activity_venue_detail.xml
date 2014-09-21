@@ -65,14 +65,14 @@
             
             <Button
                 style="@style/card_button"
-                android:id="@+id/view_on_map_button"
+                android:id="@+id/button_view_on_map"
                 android:text="@string/venue_view_on_map"/>
 
             <View style="@style/card_divider"/>
 
             <Button
                 style="@style/card_button"
-                android:id="@+id/get_directions_button"
+                android:id="@+id/button_get_directions"
                 android:text="@string/venue_get_directions"/>
 
         </LinearLayout>

@@ -22,12 +22,18 @@
                 style="@style/card_subheader_text"
                 android:id="@+id/trans_start_auto_comp"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_half"
+                android:layout_marginRight="@dimen/margin_half"
+                android:layout_marginBottom="@dimen/margin_half"
                 android:hint="@string/trans_start_point"/>
 
             <AutoCompleteTextView
                 style="@style/card_subheader_text"
                 android:id="@+id/trans_end_auto_comp"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/margin_half"
+                android:layout_marginRight="@dimen/margin_half"
+                android:layout_marginBottom="@dimen/margin_half"
                 android:hint="@string/trans_destination_point"/>
             
             <View style="@style/card_divider"/>

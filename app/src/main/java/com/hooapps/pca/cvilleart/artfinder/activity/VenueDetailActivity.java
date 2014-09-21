@@ -1,11 +1,14 @@
 package com.hooapps.pca.cvilleart.artfinder.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +44,10 @@ public class VenueDetailActivity extends BaseActivity {
     TextView phoneNumberView;
     @InjectView(R.id.venue_description)
     TextView descriptionView;
+    @InjectView(R.id.button_get_directions)
+    Button directionsButton;
+    @InjectView(R.id.button_view_on_map)
+    Button viewOnMapButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +141,37 @@ public class VenueDetailActivity extends BaseActivity {
         phoneNumberView.setText(venue.phone);
         phoneNumberView.setTextColor(getResources().getColor(colorResId));
         descriptionView.setText(Html.fromHtml(venue.description));
+
+        // Bind listeners for buttons/textivews
+        phoneNumberView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchPhoneIntent();
+            }
+        });
+
+        directionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchGoogleMapIntent();
+            }
+        });
+
+    }
+
+    private void launchPhoneIntent() {
+        String uriString = "tel:" + venue.phone.trim();
+        Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+        dialIntent.setData(Uri.parse(uriString));
+        startActivity(dialIntent);
+    }
+
+    private void launchGoogleMapIntent() {
+        String latLngString = venue.latitude + "," + venue.longitude;
+        String uriString = String.format(C.GOOGLE_MAP_URL, "", latLngString);
+        Intent directionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriString));
+        directionsIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        startActivity(directionsIntent);
     }
 
     @Override

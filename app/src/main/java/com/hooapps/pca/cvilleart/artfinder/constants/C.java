@@ -7,6 +7,8 @@ public class C {
 //    public static final String GOOGLE_API_KEY = "AIzaSyBO0jw8GkVNmk-Igx5jPZkRiwHm6MzH1oY";
     public static final String GOOGLE_API_KEY = "AIzaSyDegSazDw-VcXQtWyVDmsDiV-xgwaT9ijE";
 
+    public static final String GOOGLE_MAP_URL = "http://maps.google.com/maps?saddr=%s&daddr=%s";
+
     // Home Button IDs
     public static final int HOME_MAP = 0;
     public static final int HOME_VENUE = 1;

@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
+import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 
 import java.util.ArrayList;
@@ -39,7 +40,6 @@ import butterknife.InjectView;
 public class TransportationFragment extends BaseFragment {
 
     private static final String CAT_PACKAGE_NAME = "com.cville.cattail";
-    private static final String GOOGLE_MAP_URL = "http://maps.google.com/maps?saddr=%s&daddr=%s";
 
     private SQLiteDatabase db;
     private LayoutInflater inflater;
@@ -236,7 +236,7 @@ public class TransportationFragment extends BaseFragment {
         }
 
         // Encode the url
-        String uri = String.format(GOOGLE_MAP_URL, startAddress, endAddress);
+        String uri = String.format(C.GOOGLE_MAP_URL, startAddress, endAddress);
 
         Intent directionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         directionsIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");

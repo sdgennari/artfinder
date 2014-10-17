@@ -134,10 +134,12 @@ public class MainActivity extends BaseActivity implements
                     break;
                 case 2: swapFragment(new VenueListFragment());
                     break;
-                case 3: swapFragment(new EventListFragment());
+                case 3: swapFragment(new EventListFragment());d
                     break;
                 case 4: swapFragment(new TransportationFragment());
                     break;
+                case 5: Intent connectIntent = new Intent(getApplicationContext(), ConnectActivity.class);
+                    startActivity(connectIntent);
             }
             drawerLayout.closeDrawers();
         }
@@ -154,6 +156,8 @@ public class MainActivity extends BaseActivity implements
                 break;
             case C.HOME_TRANS: swapFragment(new TransportationFragment());
                 break;
+            case C.HOME_CONNECT: Intent connectIntent = new Intent(getApplicationContext(), ConnectActivity.class);
+                startActivity(connectIntent);
         }
     }
 

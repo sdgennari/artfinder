@@ -1,6 +1,7 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.hooapps.pca.cvilleart.artfinder.R;
+import com.hooapps.pca.cvilleart.artfinder.activity.ConnectActivity;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 
 import butterknife.ButterKnife;
@@ -29,6 +31,8 @@ public class HomeFragment extends BaseFragment {
     Button eventButton;
     @InjectView(R.id.button_transportation)
     Button transButton;
+    @InjectView(R.id.button_connect)
+    Button connectButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +79,14 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 mCallback.onHomeFragmentButtonSelected(C.HOME_TRANS);
+            }
+        });
+
+        connectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent connectIntent = new Intent(getActivity(), ConnectActivity.class);
+                startActivity(connectIntent);
             }
         });
     }

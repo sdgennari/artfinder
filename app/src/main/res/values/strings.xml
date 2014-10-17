@@ -10,6 +10,7 @@
     <string name="venues">Venues</string>
     <string name="events">Events</string>
     <string name="transportation">Transportation</string>
+    <string name="connect">Connect</string>
 
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_closed">Open Drawer</string>
@@ -47,12 +48,17 @@
     <string name="trans_water_street_lot">Water Street Lot</string>
     <string name="trans_market_street_garage">Market Street Garage</string>
 
+    <string name="connect_facebook">Facebook</string>
+    <string name="connect_twitter">Twitter</string>
+    <string name="connect_pca">PCA Blog</string>
+
     <string-array name="nav_drawer_items">
         <item>@string/home</item>
         <item>@string/map</item>
         <item>@string/venues</item>
         <item>@string/events</item>
         <item>@string/transportation</item>
+        <item>@string/connect</item>
     </string-array>
 
 </resources>

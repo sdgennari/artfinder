@@ -37,6 +37,9 @@
         <activity android:name=".activity.EventDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.ConnectActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".api.VenueDatabaseIntentService"
             android:exported="false"/>
         <service android:name=".api.ImageDownloadIntentService"

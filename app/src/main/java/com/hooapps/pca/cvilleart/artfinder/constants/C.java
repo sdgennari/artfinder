@@ -14,6 +14,7 @@ public class C {
     public static final int HOME_VENUE = 1;
     public static final int HOME_EVENT = 2;
     public static final int HOME_TRANS = 3;
+    public static final int HOME_CONNECT = 4;
 
     // Google Calendar IDs
     public static final String CALENDAR_ID_FAMILY = "/charlottesvillearts.org_1d75dtbvjd8adgei0borv0dp30@group.calendar.google.com";
@@ -37,6 +38,13 @@ public class C {
     public static final String EXT_MAX_TIME = "max_time";
     public static final String EXT_MIN_TIME = "min_time";
     public static final String EXT_EVENT_ID = "event_id";
+    public static final String EXT_CONNECT_URL = "connect_url";
+    public static final String EXT_CONNECT_IMG = "connect_image";
+
+    // Connect Urls
+    public static final String URL_FACEBOOK = "https://www.facebook.com/charlottesvillearts";
+    public static final String URL_TWITTER = "https://twitter.com/PCA_Arts";
+    public static final String URL_PCA_HOMEPAGE = "http://charlottesvillearts.org/blog/";
 
     // Image dimensions
     public static final int THUMB_SIZE = 48 * 3;    // Save 48 px thumbnails in xhdpi

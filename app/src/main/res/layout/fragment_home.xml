@@ -42,6 +42,12 @@
             style="@style/button_base"
             android:background="@drawable/bg_purple_item"
             android:text="@string/transportation" />
+
+        <Button
+            android:id="@+id/button_connect"
+            style="@style/button_base"
+            android:background="@drawable/bg_indigo_item"
+            android:text="@string/connect" />
     </LinearLayout>
 
 </ScrollView>

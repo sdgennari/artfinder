@@ -15,5 +15,38 @@
         android:id="@+id/web_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+        <ImageButton
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/web_back"
+            android:background="@null"
+            android:padding="@dimen/padding_card"/>
+
+        <ImageButton
+            android:id="@+id/button_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/web_refresh"
+            android:background="@null"
+            android:padding="@dimen/padding_card"/>
+
+        <ImageButton
+            android:id="@+id/button_forward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/web_forward"
+            android:background="@null"
+            android:padding="@dimen/padding_card"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

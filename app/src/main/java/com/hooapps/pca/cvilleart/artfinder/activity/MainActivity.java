@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity implements
                     break;
                 case 2: swapFragment(new VenueListFragment());
                     break;
-                case 3: swapFragment(new EventListFragment());d
+                case 3: swapFragment(new EventListFragment());
                     break;
                 case 4: swapFragment(new TransportationFragment());
                     break;

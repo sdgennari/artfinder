@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.hooapps.pca.cvilleart.artfinder.R;
@@ -20,6 +21,12 @@ public class ConnectFragment extends BaseFragment {
     WebView webView;
     @InjectView(R.id.bg_image)
     ImageView bgImageView;
+    @InjectView(R.id.button_back)
+    ImageButton backButton;
+    @InjectView(R.id.button_refresh)
+    ImageButton refreshButton;
+    @InjectView(R.id.button_forward)
+    ImageButton forwardButton;
 
     public static ConnectFragment newInstance(String url, int imageRes) {
         ConnectFragment fragment = new ConnectFragment();
@@ -56,6 +63,35 @@ public class ConnectFragment extends BaseFragment {
         } else {
             webView.loadUrl(C.URL_PCA_HOMEPAGE);
         }
+
+        // Configure the navigation toolbar at the bottom
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                }
+            }
+        });
+        backButton.setAlpha(0.5f);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.reload();
+            }
+        });
+        refreshButton.setAlpha(0.5f);
+
+        forwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View view) {
+                if (webView.canGoForward()) {
+                    webView.goForward();
+                }
+            }
+        });
+        forwardButton.setAlpha(0.5f);
         return rootView;
     }
 

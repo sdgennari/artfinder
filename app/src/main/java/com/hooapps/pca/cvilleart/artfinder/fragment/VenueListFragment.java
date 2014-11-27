@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.activity.VenueDetailActivity;
@@ -25,6 +26,7 @@ import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,6 +43,10 @@ public class VenueListFragment extends BaseFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("Selected Venue", venueList.get(position).organizationName);
+        FlurryAgent.logEvent(getString(R.string.flurry_directory_row), params);
+
         Intent intent = new Intent(getActivity(), VenueDetailActivity.class);
         intent.putExtra(C.EXT_PARSE_OBJECT_ID, venueList.get(position).parseObjectId);
         startActivity(intent);

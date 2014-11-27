@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
@@ -20,6 +21,8 @@ import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 import com.hooapps.pca.cvilleart.artfinder.util.BlurTransform;
 import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -167,6 +170,10 @@ public class VenueDetailActivity extends BaseActivity {
     }
 
     private void launchGoogleMapIntent() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("Selected Venue", venue.organizationName);
+        FlurryAgent.logEvent(getString(R.string.flurry_directions), params);
+
         String latLngString = venue.latitude + "," + venue.longitude;
         String uriString = String.format(C.GOOGLE_MAP_URL, "", latLngString);
         Intent directionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriString));

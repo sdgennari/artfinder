@@ -6,6 +6,7 @@ public class C {
     public static final String PARSE_REST_API_KEY = "MEoCQNxe2mA2uTZJQjVu3hzcN2yQpQsQRTkFZymI";
 //    public static final String GOOGLE_API_KEY = "AIzaSyBO0jw8GkVNmk-Igx5jPZkRiwHm6MzH1oY";
     public static final String GOOGLE_API_KEY = "AIzaSyDegSazDw-VcXQtWyVDmsDiV-xgwaT9ijE";
+    public static final String FLURRY_API_KEY = "SRTRNRNDFG34W63WCSVZ";
 
     public static final String GOOGLE_MAP_URL = "http://maps.google.com/maps?saddr=%s&daddr=%s";
 

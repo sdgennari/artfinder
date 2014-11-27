@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -181,6 +182,10 @@ GooglePlayServicesClient.OnConnectionFailedListener {
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Selected Venue", venueMarkerHashMap.get(marker).organizationName);
+                FlurryAgent.logEvent(getString(R.string.flurry_map_callout), params);
+
                 Intent intent = new Intent(getActivity(), VenueDetailActivity.class);
                 intent.putExtra(C.EXT_PARSE_OBJECT_ID, venueMarkerHashMap.get(marker).parseObjectId);
                 startActivity(intent);

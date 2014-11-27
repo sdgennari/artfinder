@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -88,6 +89,10 @@ public class TransportationFragment extends BaseFragment {
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Selected Venue", endAutoComplete.getText().toString());
+                FlurryAgent.logEvent(getString(R.string.flurry_directions), params);
+
                 String startAddress = startAutoComplete.getText().toString();
                 String endAddress = endAutoComplete.getText().toString();
                 launchGoogleMapIntent(startAddress, endAddress);
@@ -112,6 +117,7 @@ public class TransportationFragment extends BaseFragment {
         catDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FlurryAgent.logEvent(getString(R.string.flurry_get_cat_app));
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + CAT_PACKAGE_NAME));
                     startActivity(intent);
@@ -132,6 +138,10 @@ public class TransportationFragment extends BaseFragment {
                 View view = inflater.inflate(R.layout.trans_info_window, null);
                 TextView nameView = (TextView) view.findViewById(R.id.garage_name);
                 nameView.setText(marker.getTitle());
+
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Lot", marker.getTitle());
+                FlurryAgent.logEvent(getString(R.string.flurry_parking_directions), params);
                 return view;
             }
 

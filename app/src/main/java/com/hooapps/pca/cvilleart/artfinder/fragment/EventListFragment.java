@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.activity.EventDetailActivity;
@@ -64,6 +65,8 @@ public class EventListFragment extends BaseFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        FlurryAgent.logEvent(getString(R.string.flurry_event));
+
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
         intent.putExtra(C.EXT_EVENT_ID, eventList.get(position).id);
         startActivity(intent);

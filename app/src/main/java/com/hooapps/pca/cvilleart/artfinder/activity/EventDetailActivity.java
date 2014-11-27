@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.Event;
@@ -146,6 +147,7 @@ public class EventDetailActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 addEventToPhoneCalendar();
+                FlurryAgent.logEvent(getString(R.string.flurry_add_to_calendar));
             }
         });
     }

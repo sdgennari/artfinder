@@ -2,8 +2,15 @@ package com.hooapps.pca.cvilleart.artfinder.constants;
 
 public class C {
     // API keys
-    public static final String PARSE_APPLICATION_ID = "rKfcqtsBDmBdDm8HuPQO5QC5QaTzGyUTg6rXxkAx";
-    public static final String PARSE_REST_API_KEY = "MEoCQNxe2mA2uTZJQjVu3hzcN2yQpQsQRTkFZymI";
+
+    // DEBUG
+    //public static final String PARSE_APPLICATION_ID = "rKfcqtsBDmBdDm8HuPQO5QC5QaTzGyUTg6rXxkAx";
+    //public static final String PARSE_REST_API_KEY = "MEoCQNxe2mA2uTZJQjVu3hzcN2yQpQsQRTkFZymI";
+
+    // PROD
+    public static final String PARSE_APPLICATION_ID = "u6ZoFcQQN1ZIa9YHj8GAQyzifHJpf2xVpifaJxQZ";
+    public static final String PARSE_REST_API_KEY = "ThokAo7zg4FzoEba6YSuTpaLblRTxxcvtgKBQ96K";
+
 //    public static final String GOOGLE_API_KEY = "AIzaSyBO0jw8GkVNmk-Igx5jPZkRiwHm6MzH1oY";
     public static final String GOOGLE_API_KEY = "AIzaSyDegSazDw-VcXQtWyVDmsDiV-xgwaT9ijE";
     public static final String FLURRY_API_KEY = "SRTRNRNDFG34W63WCSVZ";

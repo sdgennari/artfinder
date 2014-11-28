@@ -11,9 +11,10 @@
     <string name="events">Events</string>
     <string name="transportation">Transportation</string>
     <string name="connect">Connect</string>
+    <string name="about">About</string>
 
     <string name="drawer_open">Open Drawer</string>
-    <string name="drawer_closed">Open Drawer</string>
+    <string name="drawer_closed">Close Drawer</string>
 
     <string name="home_map">Map</string>
     <string name="home_venue">Venue</string>
@@ -59,6 +60,7 @@
         <item>@string/events</item>
         <item>@string/transportation</item>
         <item>@string/connect</item>
+        <item>@string/about</item>
     </string-array>
 
     <!-- Event IDs for Flurry Analytics -->

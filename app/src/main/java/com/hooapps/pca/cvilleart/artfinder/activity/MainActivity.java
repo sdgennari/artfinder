@@ -21,6 +21,7 @@ import com.hooapps.pca.cvilleart.artfinder.api.VenueDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueService;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
+import com.hooapps.pca.cvilleart.artfinder.fragment.AboutFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.EventListFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.HomeFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.MapFragment;
@@ -140,6 +141,9 @@ public class MainActivity extends BaseActivity implements
                     break;
                 case 5: Intent connectIntent = new Intent(getApplicationContext(), ConnectActivity.class);
                     startActivity(connectIntent);
+                    break;
+                case 6: swapFragment(new AboutFragment());
+                    break;
             }
             drawerLayout.closeDrawers();
         }

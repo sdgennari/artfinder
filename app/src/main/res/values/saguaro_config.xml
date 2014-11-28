@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="apache2_projects">
+        <item>Android Support Library</item>
+        <item>Google Play Services</item>
+        <item>OAK Android Kit</item>
+        <item>Butter Knife</item>
+        <item>Gson</item>
+        <item>Picasso</item>
+        <item>Saguaro</item>
+        <item>Retrofit</item>
+        <item>Dagger</item>
+        <item>RxJava</item>
+    </string-array>
+</resources>

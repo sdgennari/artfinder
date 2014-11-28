@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -188,6 +189,13 @@ public class TransportationFragment extends BaseFragment {
             @Override
             public void onGlobalLayout() {
                 moveToMapCenter();
+
+                // Handle compatibility for API 15
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
             }
         });
     }

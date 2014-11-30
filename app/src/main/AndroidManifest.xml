@@ -34,6 +34,9 @@
         <activity android:name=".activity.VenueDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.VenueMapActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".activity.EventDetailActivity"
             android:screenOrientation="portrait"/>
 

@@ -1,5 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +33,7 @@ public class VenueDetailActivity extends BaseActivity {
     private String parseObjectId;
     private ArtVenue venue;
     private SQLiteDatabase db;
+    private Context context;
 
     @InjectView(R.id.venue_image)
     ImageView bgImageView;
@@ -59,6 +61,7 @@ public class VenueDetailActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         db = MainApp.getDatabase();
+        context = this;
 
         parseObjectId = getIntent().getStringExtra(C.EXT_PARSE_OBJECT_ID);
         if (parseObjectId == null || parseObjectId.isEmpty()) {
@@ -160,6 +163,12 @@ public class VenueDetailActivity extends BaseActivity {
             }
         });
 
+        viewOnMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchVenueMapIntent();
+            }
+        });
     }
 
     private void launchPhoneIntent() {
@@ -179,6 +188,12 @@ public class VenueDetailActivity extends BaseActivity {
         Intent directionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriString));
         directionsIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(directionsIntent);
+    }
+
+    private void launchVenueMapIntent() {
+        Intent intent = new Intent(context, VenueMapActivity.class);
+        intent.putExtra(C.EXT_PARSE_OBJECT_ID, parseObjectId);
+        startActivity(intent);
     }
 
     @Override

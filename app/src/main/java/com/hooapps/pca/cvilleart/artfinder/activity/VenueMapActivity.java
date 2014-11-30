@@ -1,14 +1,14 @@
-package com.hooapps.pca.cvilleart.artfinder.fragment;
+package com.hooapps.pca.cvilleart.artfinder.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
-import com.hooapps.pca.cvilleart.artfinder.activity.VenueDetailActivity;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
@@ -39,34 +38,54 @@ import java.util.HashMap;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MapFragment extends BaseFragment implements
+public class VenueMapActivity extends BaseActivity implements
         GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener {
 
-    private static final LatLng CVILLE_CENTER = new LatLng(38.030608, -78.481179);
     private static final int DEFAULT_ZOOM = 18;
 
     private LayoutInflater inflater;
     private GoogleMap map;
     private LocationClient locationClient;
+    private Context context;
     @InjectView(R.id.map_view)
     MapView mapView;
-    @InjectView(R.id.map_center_button)
-    Button centerButton;
-    private HashMap<Marker, ArtVenue> venueMarkerHashMap;
     private SQLiteDatabase db;
+    private String parseObjectId;
+    private ArtVenue artVenue;
+    private Marker marker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         db = MainApp.getDatabase();
-        venueMarkerHashMap = new HashMap<Marker, ArtVenue>();
+        locationClient = new LocationClient(this, this, this);
+        inflater = this.getLayoutInflater();
+        context = this;
 
-        locationClient = new LocationClient(getActivity(), this, this);
+        MapsInitializer.initialize(this);
 
-        MapsInitializer.initialize(getActivity());
+        this.setContentView(R.layout.activity_venue_map);
+        ButterKnife.inject(this);
 
+        mapView.onCreate(savedInstanceState);
+
+        parseObjectId = getIntent().getStringExtra(C.EXT_PARSE_OBJECT_ID);
+        if (parseObjectId == null || parseObjectId.isEmpty()) {
+            // TODO HANDLE ERROR HERE
+        }
+
+        artVenue = fetchVenueData();
+
+        // Customize the ActionBar based on the venue
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(
+                    ColorUtils.getColorDrawableForCategory(artVenue.primaryCategory)));
+            getActionBar().setIcon(ColorUtils.getVenueDrawableForCategory(artVenue.primaryCategory));
+        }
     }
 
     @Override
@@ -78,29 +97,21 @@ public class MapFragment extends BaseFragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
-
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        ButterKnife.inject(this, rootView);
-        mapView.onCreate(savedInstanceState);
-        return rootView;
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         setUpMap();
     }
 
-   @Override
-   public void onResume() {
-       super.onResume();
-       mapView.onResume();
-       if (servicesConnected() && !locationClient.isConnected()) {
-           locationClient.connect();
-       }
-   }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mapView != null) {
+            mapView.onResume();
+        }
+        if (servicesConnected() && locationClient != null && !locationClient.isConnected()) {
+            locationClient.connect();
+        }
+    }
 
     @Override
     public void onPause() {
@@ -118,12 +129,6 @@ public class MapFragment extends BaseFragment implements
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
-    @Override
     public void onDestroy() {
         if (mapView != null) {
             mapView.onDestroy();
@@ -132,9 +137,9 @@ public class MapFragment extends BaseFragment implements
     }
 
     private boolean servicesConnected() {
-        int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.getActivity());
+        int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (statusCode != ConnectionResult.SUCCESS) {
-            GooglePlayServicesUtil.getErrorDialog(statusCode, getActivity(), 0).show();
+            GooglePlayServicesUtil.getErrorDialog(statusCode, this, 0).show();
             return false;
         }
         return true;
@@ -162,15 +167,6 @@ public class MapFragment extends BaseFragment implements
             map.getUiSettings().setRotateGesturesEnabled(false);
         }
 
-        //-----
-
-        centerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(CVILLE_CENTER, DEFAULT_ZOOM));
-            }
-        });
-
         if (map == null) {
             return;
         }
@@ -183,21 +179,24 @@ public class MapFragment extends BaseFragment implements
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("Selected Venue", venueMarkerHashMap.get(marker).organizationName);
-                FlurryAgent.logEvent(getString(R.string.flurry_map_callout), params);
-
-                Intent intent = new Intent(getActivity(), VenueDetailActivity.class);
-                intent.putExtra(C.EXT_PARSE_OBJECT_ID, venueMarkerHashMap.get(marker).parseObjectId);
-                startActivity(intent);
+                // Close the current activity and return to the VenueDetailActivity when clicked
+                finish();
             }
         });
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(CVILLE_CENTER, DEFAULT_ZOOM));
+        // Configure the venue marker on the map
+        int drawableResId = ColorUtils.getMarkerDrawableForCategory(artVenue.primaryCategory);
+        MarkerOptions options = new MarkerOptions().title(artVenue.organizationName)
+                .snippet(artVenue.streetAddress)
+                .position(new LatLng(artVenue.latitude, artVenue.longitude))
+                .icon(BitmapDescriptorFactory.fromResource(drawableResId))
+                .anchor(0.5f, 1.0f);
+        marker = map.addMarker(options);
 
-        // TODO LOAD VENUE ID FROM THE ARGUMENTS
-        // String parseObjectId = getArguments().getString(VenueTable.COL_PARSE_OBJECT_ID);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(options.getPosition(), DEFAULT_ZOOM));
+    }
 
+    private ArtVenue fetchVenueData() {
         String[] projection = {
                 VenueTable.COL_PARSE_OBJECT_ID,
                 VenueTable.COL_ORGANIZATION_NAME,
@@ -208,40 +207,27 @@ public class MapFragment extends BaseFragment implements
                 VenueTable.COL_IMAGE_URL
         };
 
-        Cursor cursor = db.query(VenueTable.TABLE_VENUES,
+        Cursor c = db.query(
+                VenueTable.TABLE_VENUES,
                 projection,
-                VenueTable.COL_IS_DELETED + "= 'NO'",
+                VenueTable.COL_PARSE_OBJECT_ID + " = ?",
+                new String[] {parseObjectId},
                 null,
                 null,
-                null,
-                null);
+                null
+        );
 
-        Log.d("VENUES", "" + cursor.getCount());
+        c.moveToNext();
 
-        ArtVenue venue;
-        while (cursor != null && cursor.moveToNext()) {
-            venue = new ArtVenue();
-            venue.parseObjectId = cursor.getString(cursor.getColumnIndex(VenueTable.COL_PARSE_OBJECT_ID));
-            venue.organizationName = cursor.getString(cursor.getColumnIndex(VenueTable.COL_ORGANIZATION_NAME));
-            venue.primaryCategory = cursor.getString(cursor.getColumnIndex(VenueTable.COL_PRIMARY_CATEGORY));
-            venue.streetAddress = cursor.getString(cursor.getColumnIndex(VenueTable.COL_STREET_ADDRESS));
-            venue.latitude = cursor.getDouble(cursor.getColumnIndex(VenueTable.COL_LATITUDE));
-            venue.longitude = cursor.getDouble(cursor.getColumnIndex(VenueTable.COL_LONGITUDE));
-            venue.imageUrl = cursor.getString(cursor.getColumnIndex(VenueTable.COL_IMAGE_URL));
-
-            int drawableResId = ColorUtils.getMarkerDrawableForCategory(venue.primaryCategory);
-            MarkerOptions options = new MarkerOptions().title(venue.organizationName)
-                    .snippet(venue.streetAddress)
-                    .position(new LatLng(venue.latitude, venue.longitude))
-                    .icon(BitmapDescriptorFactory.fromResource(drawableResId))
-                    .anchor(0.5f, 1.0f);
-            Marker marker = map.addMarker(options);
-
-            venueMarkerHashMap.put(marker, venue);
-
-            // TODO RECENTER MAP ON SELECTED VENUE BASED ON ARGS
-        }
-
+        ArtVenue venue = new ArtVenue();
+        venue.parseObjectId = c.getString(c.getColumnIndex(VenueTable.COL_PARSE_OBJECT_ID));
+        venue.organizationName = c.getString(c.getColumnIndex(VenueTable.COL_ORGANIZATION_NAME));
+        venue.primaryCategory = c.getString(c.getColumnIndex(VenueTable.COL_PRIMARY_CATEGORY));
+        venue.streetAddress = c.getString(c.getColumnIndex(VenueTable.COL_STREET_ADDRESS));
+        venue.latitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LATITUDE));
+        venue.longitude = c.getDouble(c.getColumnIndex(VenueTable.COL_LONGITUDE));
+        venue.imageUrl = c.getString(c.getColumnIndex(VenueTable.COL_IMAGE_URL));
+        return venue;
     }
 
     class VenueInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
@@ -256,16 +242,15 @@ public class MapFragment extends BaseFragment implements
             addressView.setText(marker.getSnippet());
 
             ImageView imageView = (ImageView) v.findViewById(R.id.venue_image);
-            ArtVenue venue = venueMarkerHashMap.get(marker);
 
-            int drawableResId = ColorUtils.getVenueDrawableForCategory(venue.primaryCategory);
-            if (venue.imageUrl != null && !venue.imageUrl.isEmpty()) {
-                Picasso.with(getActivity()).load(venue.imageUrl)
+            int drawableResId = ColorUtils.getVenueDrawableForCategory(artVenue.primaryCategory);
+            if (artVenue.imageUrl != null && !artVenue.imageUrl.isEmpty()) {
+                Picasso.with(context).load(artVenue.imageUrl)
                         .placeholder(drawableResId)
                         .resize(C.THUMB_SIZE, C.THUMB_SIZE)
                         .centerCrop().into(imageView);
             } else {
-                Picasso.with(getActivity()).load(drawableResId)
+                Picasso.with(context).load(drawableResId)
                         .placeholder(drawableResId)
                         .resize(C.THUMB_SIZE, C.THUMB_SIZE)
                         .into(imageView);
@@ -278,5 +263,14 @@ public class MapFragment extends BaseFragment implements
         public View getInfoContents(Marker marker) {
             return null;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

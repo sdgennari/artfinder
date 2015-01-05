@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -40,15 +40,17 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MapFragment extends BaseFragment implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final LatLng CVILLE_CENTER = new LatLng(38.030608, -78.481179);
     private static final int DEFAULT_ZOOM = 18;
+    private static final String TAG = "MAPS";
 
     private LayoutInflater inflater;
     private GoogleMap map;
-    private LocationClient locationClient;
+    private GoogleApiClient mGoogleApiClient;
+
     @InjectView(R.id.map_view)
     MapView mapView;
     @InjectView(R.id.map_center_button)
@@ -62,11 +64,13 @@ public class MapFragment extends BaseFragment implements
 
         db = MainApp.getDatabase();
         venueMarkerHashMap = new HashMap<Marker, ArtVenue>();
-
-        locationClient = new LocationClient(getActivity(), this, this);
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
         MapsInitializer.initialize(getActivity());
-
     }
 
     @Override
@@ -97,8 +101,8 @@ public class MapFragment extends BaseFragment implements
    public void onResume() {
        super.onResume();
        mapView.onResume();
-       if (servicesConnected() && !locationClient.isConnected()) {
-           locationClient.connect();
+       if (servicesConnected() && !mGoogleApiClient.isConnected()) {
+           mGoogleApiClient.connect();
        }
    }
 
@@ -106,8 +110,8 @@ public class MapFragment extends BaseFragment implements
     public void onPause() {
         super.onPause();
         mapView.onPause();
-        if (locationClient.isConnected()) {
-            locationClient.disconnect();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
         }
     }
 
@@ -141,15 +145,18 @@ public class MapFragment extends BaseFragment implements
     }
 
     @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "GoogleApiClient connection suspended");
+    }
+
+    @Override
     public void onConnectionFailed(ConnectionResult result) {
+        Log.i(TAG, "GoogleApiClient connection failed");
     }
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-    }
-
-    @Override
-    public void onDisconnected() {
+    public void onConnected(Bundle bundle) {
+        Log.i(TAG, "GoogleApiClient connection started");
     }
 
     private void setUpMap() {
@@ -161,8 +168,6 @@ public class MapFragment extends BaseFragment implements
             map.setMyLocationEnabled(true);
             map.getUiSettings().setRotateGesturesEnabled(false);
         }
-
-        //-----
 
         centerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,9 +199,6 @@ public class MapFragment extends BaseFragment implements
         });
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(CVILLE_CENTER, DEFAULT_ZOOM));
-
-        // TODO LOAD VENUE ID FROM THE ARGUMENTS
-        // String parseObjectId = getArguments().getString(VenueTable.COL_PARSE_OBJECT_ID);
 
         String[] projection = {
                 VenueTable.COL_PARSE_OBJECT_ID,
@@ -238,8 +240,6 @@ public class MapFragment extends BaseFragment implements
             Marker marker = map.addMarker(options);
 
             venueMarkerHashMap.put(marker, venue);
-
-            // TODO RECENTER MAP ON SELECTED VENUE BASED ON ARGS
         }
 
     }

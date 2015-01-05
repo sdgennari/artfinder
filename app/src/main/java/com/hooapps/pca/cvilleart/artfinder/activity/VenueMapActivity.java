@@ -16,7 +16,9 @@ import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+//import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -39,28 +41,33 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class VenueMapActivity extends BaseActivity implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final int DEFAULT_ZOOM = 18;
+    private static final String TAG = "MAPS";
 
     private LayoutInflater inflater;
     private GoogleMap map;
-    private LocationClient locationClient;
+    private GoogleApiClient mGoogleApiClient;
     private Context context;
     @InjectView(R.id.map_view)
     MapView mapView;
     private SQLiteDatabase db;
     private String parseObjectId;
     private ArtVenue artVenue;
-    private Marker marker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         db = MainApp.getDatabase();
-        locationClient = new LocationClient(this, this, this);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
         inflater = this.getLayoutInflater();
         context = this;
 
@@ -108,8 +115,8 @@ public class VenueMapActivity extends BaseActivity implements
         if (mapView != null) {
             mapView.onResume();
         }
-        if (servicesConnected() && locationClient != null && !locationClient.isConnected()) {
-            locationClient.connect();
+        if (servicesConnected() && !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.connect();
         }
     }
 
@@ -117,8 +124,8 @@ public class VenueMapActivity extends BaseActivity implements
     public void onPause() {
         super.onPause();
         mapView.onPause();
-        if (locationClient.isConnected()) {
-            locationClient.disconnect();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
         }
     }
 
@@ -146,15 +153,18 @@ public class VenueMapActivity extends BaseActivity implements
     }
 
     @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "GoogleApiClient connection suspended");
+    }
+
+    @Override
     public void onConnectionFailed(ConnectionResult result) {
+        Log.i(TAG, "GoogleApiClient connection failed");
     }
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-    }
-
-    @Override
-    public void onDisconnected() {
+    public void onConnected(Bundle bundle) {
+        Log.i(TAG, "GoogleApiClient connection started");
     }
 
     private void setUpMap() {
@@ -191,7 +201,7 @@ public class VenueMapActivity extends BaseActivity implements
                 .position(new LatLng(artVenue.latitude, artVenue.longitude))
                 .icon(BitmapDescriptorFactory.fromResource(drawableResId))
                 .anchor(0.5f, 1.0f);
-        marker = map.addMarker(options);
+        map.addMarker(options);
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(options.getPosition(), DEFAULT_ZOOM));
     }

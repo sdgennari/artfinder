@@ -36,6 +36,7 @@ public class C {
     // Constant values
     public static final String DEFAULT_UPDATED_AT_TIME = "2014-01-01T00:00:00.000Z";
     public static final String EVENT_URL_TIME_ZONE = "T00:00:00Z";
+    public static final int NUM_FILTER_ITEMS = 5;
 
     // Strings for passing Extras in intents
     public static final String EXT_WHERE_CLAUSE = "ext_where_clause";
@@ -48,6 +49,7 @@ public class C {
     public static final String EXT_EVENT_ID = "event_id";
     public static final String EXT_CONNECT_URL = "connect_url";
     public static final String EXT_CONNECT_IMG = "connect_image";
+    public static final String EXT_CHECKED_ITEMS = "checked_items";
 
     // Connect Urls
     public static final String URL_FACEBOOK = "https://www.facebook.com/charlottesvillearts";

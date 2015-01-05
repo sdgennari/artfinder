@@ -63,6 +63,26 @@
         <item>@string/about</item>
     </string-array>
 
+    <!-- Categories -->
+    <string name="category_dance">Dance</string>
+    <string name="category_gallery">Gallery</string>
+    <string name="category_music">Music</string>
+    <string name="category_theatre">Theatre</string>
+    <string name="category_other">Other</string>
+
+    <!-- Category Filter-->
+    <string name="filter_categories">Filter Categories</string>
+    <string name="filter">Filter</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+    <string-array name="event_filter_categories">
+        <item>@string/category_dance</item>
+        <item>@string/category_gallery</item>
+        <item>@string/category_music</item>
+        <item>@string/category_theatre</item>
+        <item>@string/category_other</item>
+    </string-array>
+
     <!-- Event IDs for Flurry Analytics -->
     <string name="flurry_about_pca">About PCA Selected</string>
     <string name="flurry_add_to_calendar">Add to Calendar Selected</string>

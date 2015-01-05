@@ -1,23 +1,27 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.flurry.android.FlurryAgent;
+import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.activity.EventDetailActivity;
@@ -35,14 +39,52 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class EventListFragment extends BaseFragment implements
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener,
+        EventFilterDialogFragment.EventFilterDialogListener {
 
+    private Datastore datastore;
     private SQLiteDatabase db;
     private List<Event> eventList;
     private EventListAdapter adapter;
+    private boolean[] checkedItems;
+    private String[] categoryArr;
 
     @InjectView(R.id.list)
     ListView listView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        datastore = Datastore.getInstance();
+        checkedItems = datastore.getEventFilterItems();
+        categoryArr = getResources().getStringArray(R.array.event_filter_categories);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_filter, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_filter) {
+
+            Bundle args = new Bundle();
+            args.putBooleanArray(C.EXT_CHECKED_ITEMS, checkedItems.clone());
+
+            DialogFragment dialog = new EventFilterDialogFragment();
+            dialog.setArguments(args);
+            dialog.setTargetFragment(this, 0);
+            dialog.show(getFragmentManager(), "EventFilerDialogFragment");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +96,8 @@ public class EventListFragment extends BaseFragment implements
 
         loadData();
         adapter = new EventListAdapter(getActivity());
-        adapter.addAll(eventList);
+        adapter.setData(eventList);
+        filterList();
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -68,7 +111,7 @@ public class EventListFragment extends BaseFragment implements
         FlurryAgent.logEvent(getString(R.string.flurry_event));
 
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
-        intent.putExtra(C.EXT_EVENT_ID, eventList.get(position).id);
+        intent.putExtra(C.EXT_EVENT_ID, adapter.getItem(position).id);
         startActivity(intent);
     }
 
@@ -102,16 +145,42 @@ public class EventListFragment extends BaseFragment implements
         }
     }
 
+    @Override
+    public void onFilterDialogPositiveClick(DialogFragment dialog, boolean[] checkedItems) {
+        this.checkedItems = checkedItems;
+        datastore.saveEventFilterItems(checkedItems);
+        filterList();
+    }
+
+    @Override
+    public void onFilterDialogNegativeClick(DialogFragment dialog) {
+    }
+
+    private void filterList() {
+        String categoryString = "";
+        for (int idx = 0; idx < checkedItems.length; idx++) {
+            if (checkedItems[idx]) {
+                categoryString += categoryArr[idx] + " ";
+            }
+        }
+        adapter.getFilter().filter(categoryString);
+    }
+
     private class EventListAdapter extends ArrayAdapter<Event> {
-        private Context context;
         private LayoutInflater inflater;
+
+        private List<Event> originalList;
+        private List<Event> filteredList;
+        private Filter categoryFilter;
 
         public EventListAdapter(Context context) {
             super(context, R.layout.event_list_item);
-            this.context = context;
             inflater = LayoutInflater.from(context);
+            originalList = new ArrayList<Event>();
+            filteredList = new ArrayList<Event>();
         }
 
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView != null) {
@@ -169,6 +238,34 @@ public class EventListFragment extends BaseFragment implements
             return convertView;
         }
 
+        @Override
+        public Event getItem(int pos) {
+            return filteredList.get(pos);
+        }
+
+        @Override
+        public int getCount() {
+            return filteredList.size();
+        }
+
+        @Override
+        public long getItemId(int pos) {
+            return 0;
+        }
+
+        @Override
+        public Filter getFilter() {
+            if (categoryFilter == null) {
+                categoryFilter = new EventFilter();
+            }
+            return categoryFilter;
+        }
+
+        public void setData(List<Event> list) {
+            this.originalList = list;
+            this.filteredList = list;
+        }
+
         private boolean hasHeader(int position) {
             if (position == 0) {
                 return true;
@@ -183,6 +280,43 @@ public class EventListFragment extends BaseFragment implements
             c.setTimeInMillis(previous.unixStart);
             int prevDay = c.get(Calendar.DAY_OF_MONTH);
             return prevDay != curDay;
+        }
+
+        class EventFilter extends Filter {
+
+            // The charSequence is string with all desired categories separated by commas
+            // Thus, charSequence.contain(event.category) will return true if the category
+            // is one of the desired categories
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults results = new FilterResults();
+                String compText = charSequence.toString().toLowerCase();
+
+                if (compText.isEmpty()) {
+                    results.values = originalList;
+                    results.count = originalList.size();
+                    for (int i = 0; i < checkedItems.length; i++) {
+                        checkedItems[i] = true;
+                    }
+                } else {
+                    List<Event> nList = new ArrayList<Event>();
+
+                    for (Event event : originalList) {
+                        if (compText.contains(event.category.toLowerCase())) {
+                            nList.add(event);
+                        }
+                    }
+                    results.values = nList;
+                    results.count = nList.size();
+                }
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                filteredList = (List<Event>) results.values;
+                notifyDataSetChanged();
+            }
         }
     }
 

@@ -5,23 +5,39 @@ import java.util.Calendar;
 public class TimeUtils {
 
 
-    public static long parseUnixFromDate(String dateString) {
-        if (dateString == null) {
+    public static long parseUnixFromDateTime(String dateTimeString) {
+        if (dateTimeString == null) {
             return 0;
         }
-        // DATE FORM 2014-01-19T04:00:00-05:00
-        int year = Integer.parseInt(dateString.substring(0, 4));
-        int month = Integer.parseInt(dateString.substring(5, 7));
-        int day = Integer.parseInt(dateString.substring(8, 10));
-        int hour = Integer.parseInt(dateString.substring(11, 13));
-        int minute = Integer.parseInt(dateString.substring(14, 16));
-        int timeZoneMod = Integer.parseInt(dateString.substring(19, 21));
+        // DATE FORM: YYYY-MM-DDThh:mm:ss-05:00
+        int year = Integer.parseInt(dateTimeString.substring(0, 4));
+        int month = Integer.parseInt(dateTimeString.substring(5, 7));
+        int day = Integer.parseInt(dateTimeString.substring(8, 10));
+        int hour = Integer.parseInt(dateTimeString.substring(11, 13));
+        int minute = Integer.parseInt(dateTimeString.substring(14, 16));
+        int timeZoneMod = Integer.parseInt(dateTimeString.substring(19, 21));
 
         Calendar c = Calendar.getInstance();
         c.set(year, Calendar.JANUARY, day, hour-timeZoneMod, minute);
         c.set(Calendar.MONTH, month-1);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
+
+        return c.getTimeInMillis();
+    }
+
+    public static long parseUnixFromDate(String dateString) {
+        if (dateString == null) {
+            return 0;
+        }
+
+        // DATE FORM: YYYY-MM-DD
+        int year = Integer.parseInt(dateString.substring(0, 4));
+        int month = Integer.parseInt(dateString.substring(5, 7));
+        int day = Integer.parseInt(dateString.substring(8, 10));
+
+        Calendar c = Calendar.getInstance();
+        c.set(year, month-1, day);
 
         return c.getTimeInMillis();
     }

@@ -14,6 +14,7 @@ public class EventTable {
     public static final String COL_LOCATION = "location";
     public static final String COL_START_TIME = "start_time";
     public static final String COL_END_TIME = "end_time";
+    public static final String COL_IS_ALL_DAY = "is_all_day";
 
     private static final String CREATE_TABLE = "CREATE TABLE "
             + TABLE_EVENTS
@@ -26,7 +27,8 @@ public class EventTable {
             + COL_DESCRIPTION + " TEXT, "
             + COL_LOCATION + " VARCHAR(255), "
             + COL_START_TIME + " INTEGER, "
-            + COL_END_TIME + " INTEGER "
+            + COL_END_TIME + " INTEGER, "
+            + COL_IS_ALL_DAY + " BOOL NOT NULL DEFAULT '0' "
             + ");";
 
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_EVENTS;

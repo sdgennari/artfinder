@@ -1,21 +1,14 @@
 package com.hooapps.pca.cvilleart.artfinder.api.model;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
-import com.hooapps.pca.cvilleart.artfinder.MainApp;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Event {
 
-    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     // NOTE: This is not set via the JSON, it must be manually set
     public String category;
+
+    // NOTE: This is not set via the JSON, it must be manually set
+    public boolean isAllDay = false;        // Default the value to false
 
     @SerializedName("id")
     public String id;

@@ -120,7 +120,8 @@ public class EventListFragment extends BaseFragment implements
                 EventTable.COL_EVENT_ID,
                 EventTable.COL_CATEGORY,
                 EventTable.COL_SUMMARY,
-                EventTable.COL_START_TIME
+                EventTable.COL_START_TIME,
+                EventTable.COL_IS_ALL_DAY
         };
 
         Cursor c = db.query(
@@ -141,6 +142,7 @@ public class EventListFragment extends BaseFragment implements
             event.category = c.getString(c.getColumnIndex(EventTable.COL_CATEGORY));
             event.summary = c.getString(c.getColumnIndex(EventTable.COL_SUMMARY));
             event.unixStart = c.getLong(c.getColumnIndex(EventTable.COL_START_TIME));
+            event.isAllDay = (0!=c.getInt(c.getColumnIndex(EventTable.COL_IS_ALL_DAY)));
             eventList.add(event);
         }
     }
@@ -204,23 +206,31 @@ public class EventListFragment extends BaseFragment implements
             holder.nameView.setText(event.summary);
             holder.categoryView.setText(event.category);
 
-            // Convert the unixStart time to hours and minutes
             Calendar c = Calendar.getInstance();
-            c.setTimeInMillis(event.unixStart);
-            int hours = c.get(Calendar.HOUR_OF_DAY);
-            int minutes = c.get(Calendar.MINUTE);
-            int formattedHours = hours;
-
-            if (hours > 12) {
-                formattedHours = hours % 12;
-            }
-            holder.hourView.setText(String.format("% 2d", formattedHours));
-            holder.minuteView.setText(String.format("%02d", minutes));
-
-            if (hours/12 == 0) {
-                holder.timePeriodView.setText("AM");
+            if (event.isAllDay) {
+                // Display 'All Day' instead of time for all day events
+                holder.timePeriodView.setVisibility(View.GONE);
+                holder.hourView.setText("All");
+                holder.minuteView.setText("Day");
             } else {
-                holder.timePeriodView.setText("PM");
+                // Convert the unixStart time to hours and minutes
+                c.setTimeInMillis(event.unixStart);
+                int hours = c.get(Calendar.HOUR_OF_DAY);
+                int minutes = c.get(Calendar.MINUTE);
+                int formattedHours = hours;
+
+                if (hours > 12) {
+                    formattedHours = hours % 12;
+                }
+                holder.hourView.setText(String.format("% 2d", formattedHours));
+                holder.minuteView.setText(String.format("%02d", minutes));
+
+                holder.timePeriodView.setVisibility(View.VISIBLE);
+                if (hours / 12 == 0) {
+                    holder.timePeriodView.setText("AM");
+                } else {
+                    holder.timePeriodView.setText("PM");
+                }
             }
 
             int drawableResId = ColorUtils.getColorDrawableForCategory(event.category);

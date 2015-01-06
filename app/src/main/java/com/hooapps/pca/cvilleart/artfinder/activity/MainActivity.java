@@ -184,8 +184,6 @@ public class MainActivity extends BaseActivity implements
     }
 
     private void fetchEventData() {
-//        String maxTime = "2014-08-21T00:00:00Z";
-//        String minTime = "2014-08-14T00:00:00Z";
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Calendar c = Calendar.getInstance();
@@ -194,7 +192,6 @@ public class MainActivity extends BaseActivity implements
         String minTime = sdf.format(new Date(c.getTimeInMillis())) + C.EVENT_URL_TIME_ZONE;
         String maxTime = sdf.format(new Date(c.getTimeInMillis() + MS_PER_60_DAYS)) + C.EVENT_URL_TIME_ZONE;
 
-        Log.d("TEST", "max: " + maxTime);
         Intent intent = new Intent(this, EventDatabaseIntentService.class);
         intent.putExtra(C.EXT_MAX_TIME, maxTime);
         intent.putExtra(C.EXT_MIN_TIME, minTime);

@@ -6,19 +6,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
+import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenueResponse;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 
 public class VenueDatabaseIntentService extends IntentService {
 
@@ -35,7 +39,13 @@ public class VenueDatabaseIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String whereClause = intent.getStringExtra(C.EXT_WHERE_CLAUSE);
         venueService = initVenueService();
-        ArtVenueResponse response = venueService.getAllArtVenuesAfterDate(whereClause);
+        ArtVenueResponse response;
+        try {
+            response = venueService.getAllArtVenuesAfterDate(whereClause);
+        } catch (RetrofitError cause) {
+            this.stopSelf();
+            return;
+        }
         artVenueList = response.results;
         insertArtVenues();
     }
@@ -75,47 +85,6 @@ public class VenueDatabaseIntentService extends IntentService {
         if (!lastUpdatedTime.isEmpty()) {
             Datastore.getInstance().saveVenueUpdateDate(lastUpdatedTime);
         }
-
-        // TODO REMOVE AFTER VERIFYING SUCCESS
-        testDataSave(db);
-
-        // TODO DEVELOP A MORE EFFICIENT WAY TO SAVE IMAGES
-//        saveVenueImages();
-    }
-
-    private void saveVenueImages() {
-        ArrayList<String> urlList = new ArrayList<String>();
-        ArrayList<String> parseObjectIdList = new ArrayList<String>();
-        for (ArtVenue venue : artVenueList) {
-            urlList.add(venue.imageUrl);
-            parseObjectIdList.add(venue.parseObjectId);
-        }
-        Log.d("TEST", "Size: " + urlList.size());
-
-        Intent downloadIntent = new Intent(this, ImageDownloadIntentService.class);
-        downloadIntent.putExtra(C.EXT_IMAGE_URL_LIST, urlList);
-        downloadIntent.putExtra(C.EXT_PARSE_OBJECT_ID_LIST, parseObjectIdList);
-        startService(downloadIntent);
-    }
-
-    private void testDataSave(SQLiteDatabase db) {
-        String[] projection = {
-                VenueTable.COL_ID,
-                VenueTable.COL_CREATED_AT,
-                VenueTable.COL_UPDATED_AT,
-                VenueTable.COL_ORGANIZATION_NAME
-        };
-
-        Cursor c = db.query(
-                VenueTable.TABLE_VENUES,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-        Log.d("TEST", "Items: " + c.getCount());
     }
 
     private ContentValues makeContentValuesFromObject(ArtVenue venue) {

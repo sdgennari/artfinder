@@ -184,7 +184,6 @@ public class MainActivity extends BaseActivity implements
     }
 
     private void fetchEventData() {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Calendar c = Calendar.getInstance();
 

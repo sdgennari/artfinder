@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 
 public class EventDatabaseIntentService extends IntentService {
 
@@ -44,54 +46,59 @@ public class EventDatabaseIntentService extends IntentService {
 
         Log.d("TEST", "max: " + maxTime);
 
-        // Dance
-        EventResponse response = eventService.getDanceEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_dance);
-        }
-        eventList.addAll(response.items);
+        try {
+            // Dance
+            EventResponse response = eventService.getDanceEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_dance);
+            }
+            eventList.addAll(response.items);
 
-        // Family (Other)
-        response = eventService.getFamilyEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_other);
-        }
-        eventList.addAll(response.items);
+            // Family (Other)
+            response = eventService.getFamilyEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_other);
+            }
+            eventList.addAll(response.items);
 
-        // Film (Other)
-        response = eventService.getFilmEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_other);
-        }
-        eventList.addAll(response.items);
+            // Film (Other)
+            response = eventService.getFilmEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_other);
+            }
+            eventList.addAll(response.items);
 
-        // Visual Arts (Gallery)
-        response = eventService.getGalleryEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_gallery);
-        }
-        eventList.addAll(response.items);
+            // Visual Arts (Gallery)
+            response = eventService.getGalleryEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_gallery);
+            }
+            eventList.addAll(response.items);
 
-        // Literary (Other)
-        response = eventService.getLiteraryEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_other);
-        }
-        eventList.addAll(response.items);
+            // Literary (Other)
+            response = eventService.getLiteraryEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_other);
+            }
+            eventList.addAll(response.items);
 
-        // Music
-        response = eventService.getMusicEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_music);
-        }
-        eventList.addAll(response.items);
+            // Music
+            response = eventService.getMusicEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_music);
+            }
+            eventList.addAll(response.items);
 
-        // Theatre
-        response = eventService.getTheaterEvents(maxTime, minTime);
-        for (Event event : response.items) {
-            event.category = getResources().getString(R.string.category_theatre);
+            // Theatre
+            response = eventService.getTheaterEvents(maxTime, minTime);
+            for (Event event : response.items) {
+                event.category = getResources().getString(R.string.category_theatre);
+            }
+            eventList.addAll(response.items);
+        } catch (RetrofitError cause) {
+            this.stopSelf();
+            return;
         }
-        eventList.addAll(response.items);
 
         insertEvents();
         deleteOldEvents();
@@ -169,8 +176,8 @@ public class EventDatabaseIntentService extends IntentService {
             date.setTime(tmpDate);
             event.start.dateTime = dateTimeFormat.format(date);
 
-            // Set the dateTime for the end of the event
-            date.setTime(tmpDate + MS_PER_DAY - 1);
+            // Set the dateTime for the end of the event (23:59)
+            date.setTime(tmpDate + MS_PER_DAY - 60000);
             event.end.dateTime = dateTimeFormat.format(date);
 
             // Mark the event as all day

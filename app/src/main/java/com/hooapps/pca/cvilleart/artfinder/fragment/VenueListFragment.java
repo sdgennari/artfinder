@@ -34,12 +34,16 @@ import butterknife.InjectView;
 public class VenueListFragment extends BaseFragment implements
         AdapterView.OnItemClickListener {
 
-    @InjectView(R.id.list)
-    ListView listView;
-
     private SQLiteDatabase db;
     private ArrayList<ArtVenue> venueList;
     private VenueListAdapter adapter;
+
+    @InjectView(R.id.list)
+    ListView listView;
+    @InjectView(R.id.error_title)
+    TextView noEventTitleView;
+    @InjectView(R.id.error_message)
+    TextView noEventMessageView;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -68,6 +72,16 @@ public class VenueListFragment extends BaseFragment implements
         adapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(this);
+
+        if (venueList.size() == 0) {
+            noEventTitleView.setVisibility(View.VISIBLE);
+            noEventMessageView.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        } else {
+            noEventTitleView.setVisibility(View.GONE);
+            noEventMessageView.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }
 
         return root;
     }

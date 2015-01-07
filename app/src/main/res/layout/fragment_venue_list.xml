@@ -9,4 +9,18 @@
         android:layout_height="match_parent">
     </ListView>
 
+    <TextView
+        style="@style/error_title"
+        android:id="@+id/error_title"
+        android:layout_marginTop="@dimen/error_margin_top"
+        android:layout_centerHorizontal="true"
+        android:text="@string/error_no_events"/>
+
+    <TextView
+        style="@style/error_message"
+        android:id="@+id/error_message"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/error_title"
+        android:text="@string/error_check_connection"/>
+
 </RelativeLayout>

@@ -16,6 +16,8 @@
     <dimen name="li_body_padding_half">8dp</dimen>
 
     <!-- Font Sizes -->
+    <dimen name="error_title">28sp</dimen>
+    <dimen name="error_message">16sp</dimen>
     <dimen name="text_header">20sp</dimen>
     <dimen name="text_body_title">16sp</dimen>
     <dimen name="text_body_content">14sp</dimen>
@@ -34,4 +36,6 @@
 
     <!-- Misc. Dimensions -->
     <dimen name="image_thumb_size">48dp</dimen>
+    <dimen name="error_padding">16dp</dimen>
+    <dimen name="error_margin_top">48dp</dimen>
 </resources>

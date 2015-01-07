@@ -51,6 +51,10 @@ public class EventListFragment extends BaseFragment implements
 
     @InjectView(R.id.list)
     ListView listView;
+    @InjectView(R.id.error_title)
+    TextView noEventTitleView;
+    @InjectView(R.id.error_message)
+    TextView noEventMessageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +106,16 @@ public class EventListFragment extends BaseFragment implements
         adapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(this);
+
+        if (eventList.size() == 0) {
+            noEventTitleView.setVisibility(View.VISIBLE);
+            noEventMessageView.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        } else {
+            noEventTitleView.setVisibility(View.GONE);
+            noEventMessageView.setVisibility(View.GONE);
+            listView.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }

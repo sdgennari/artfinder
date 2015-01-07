@@ -73,4 +73,19 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
+    <style name="error_base">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/error_padding</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="error_title" parent="error_base">
+        <item name="android:textSize">@dimen/error_title</item>
+    </style>
+
+    <style name="error_message" parent="error_base">
+        <item name="android:textSize">@dimen/error_message</item>
+    </style>
+
 </resources>

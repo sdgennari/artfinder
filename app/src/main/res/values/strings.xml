@@ -94,4 +94,9 @@
     <string name="flurry_map_callout">Map Callout Selected</string>
     <string name="flurry_parking_directions">Parking Directions Selected</string>
 
+    <!-- Error messages -->
+    <string name="error_no_events">Oops! No Events Found</string>
+    <string name="error_no_venues">Oops! No Venues Found</string>
+    <string name="error_check_connection">Our bad. Please check network connection and try again.</string>
+
 </resources>

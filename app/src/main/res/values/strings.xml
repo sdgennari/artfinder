@@ -88,7 +88,7 @@
     <string name="flurry_add_to_calendar">Add to Calendar Selected</string>
     <string name="flurry_directions">Directions Selected</string>
     <string name="flurry_directory_row">Directory Row Selected</string>
-    <string name="flurry_event_filer">Event Filter Applied</string>
+    <string name="flurry_event_filter">Event Filter Applied</string>
     <string name="flurry_event">Event Selected</string>
     <string name="flurry_get_cat_app">Get the CAT App selected</string>
     <string name="flurry_map_callout">Map Callout Selected</string>

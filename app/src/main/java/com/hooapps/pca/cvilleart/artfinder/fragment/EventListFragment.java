@@ -32,6 +32,7 @@ import com.hooapps.pca.cvilleart.artfinder.util.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -162,6 +163,16 @@ public class EventListFragment extends BaseFragment implements
     public void onFilterDialogPositiveClick(DialogFragment dialog, boolean[] checkedItems) {
         this.checkedItems = checkedItems;
         datastore.saveEventFilterItems(checkedItems);
+        String[] categoryArr = getResources().getStringArray(R.array.event_filter_categories);
+        HashMap<String, String> params = new HashMap<String, String>();
+        for (int i = 0; i < checkedItems.length; i++) {
+            if (checkedItems[i]) {
+                params.put(categoryArr[i], "Enabled");
+            } else {
+                params.put(categoryArr[i], "Disabled");
+            }
+        }
+        FlurryAgent.logEvent(getString(R.string.flurry_event_filter), params);
         filterList();
     }
 
@@ -210,7 +221,6 @@ public class EventListFragment extends BaseFragment implements
                 holder.timeContainerView = (RelativeLayout) convertView.findViewById(R.id.time_container);
                 convertView.setTag(holder);
             }
-
 
             Event event = getItem(position);
             holder.nameView.setText(event.summary);

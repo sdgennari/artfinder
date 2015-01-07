@@ -68,7 +68,6 @@ public class EventDetailActivity extends BaseActivity {
 
         eventId = getIntent().getStringExtra(C.EXT_EVENT_ID);
         if (eventId == null || eventId.isEmpty()) {
-            // TODO HANDLE ERROR HERE
         }
         event = fetchEventData();
 

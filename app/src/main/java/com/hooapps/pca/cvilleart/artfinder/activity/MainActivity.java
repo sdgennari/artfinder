@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
 import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.adapter.NavDrawerAdapter;
@@ -139,6 +140,7 @@ public class MainActivity extends BaseActivity implements
                     startActivity(connectIntent);
                     break;
                 case 6: swapFragment(new AboutFragment());
+                    FlurryAgent.logEvent(getString(R.string.flurry_about_pca));
                     break;
             }
             drawerLayout.closeDrawers();

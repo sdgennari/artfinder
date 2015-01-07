@@ -1,22 +1,17 @@
 package com.hooapps.pca.cvilleart.artfinder.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-//import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,8 +29,6 @@ import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 import com.hooapps.pca.cvilleart.artfinder.util.ColorUtils;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -154,17 +147,17 @@ public class VenueMapActivity extends BaseActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "GoogleApiClient connection suspended");
+        //Log.i(TAG, "GoogleApiClient connection suspended");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.i(TAG, "GoogleApiClient connection failed");
+        //Log.i(TAG, "GoogleApiClient connection failed");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i(TAG, "GoogleApiClient connection started");
+        //Log.i(TAG, "GoogleApiClient connection started");
     }
 
     private void setUpMap() {

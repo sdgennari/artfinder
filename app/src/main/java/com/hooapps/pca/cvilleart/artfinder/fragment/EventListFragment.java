@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -147,8 +146,6 @@ public class EventListFragment extends BaseFragment implements
                 null,
                 EventTable.COL_START_TIME + " ASC");
 
-        Log.d("EVENTS", "" + c.getCount());
-
         Event event;
         while (c.moveToNext()) {
             event = new Event();
@@ -207,7 +204,6 @@ public class EventListFragment extends BaseFragment implements
                 holder.headerView = (TextView) convertView.findViewById(R.id.event_header);
                 holder.nameView = (TextView) convertView.findViewById(R.id.event_name);
                 holder.categoryView = (TextView) convertView.findViewById(R.id.event_category);
-//                holder.timeView = (TextView) convertView.findViewById(R.id.time);
                 holder.hourView = (TextView) convertView.findViewById(R.id.hour);
                 holder.minuteView = (TextView) convertView.findViewById(R.id.minute);
                 holder.timePeriodView = (TextView) convertView.findViewById(R.id.time_period);

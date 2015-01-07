@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,17 +145,17 @@ public class MapFragment extends BaseFragment implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "GoogleApiClient connection suspended");
+        //Log.i(TAG, "GoogleApiClient connection suspended");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.i(TAG, "GoogleApiClient connection failed");
+        //Log.i(TAG, "GoogleApiClient connection failed");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i(TAG, "GoogleApiClient connection started");
+        //Log.i(TAG, "GoogleApiClient connection started");
     }
 
     private void setUpMap() {
@@ -217,8 +216,6 @@ public class MapFragment extends BaseFragment implements
                 null,
                 null,
                 null);
-
-        Log.d("VENUES", "" + cursor.getCount());
 
         ArtVenue venue;
         while (cursor != null && cursor.moveToNext()) {

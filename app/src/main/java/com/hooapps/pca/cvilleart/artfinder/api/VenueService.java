@@ -5,9 +5,7 @@ import com.hooapps.pca.cvilleart.artfinder.constants.C;
 
 import retrofit.http.GET;
 import retrofit.http.Headers;
-import retrofit.http.Path;
 import retrofit.http.Query;
-import rx.Observable;
 
 public interface VenueService {
 

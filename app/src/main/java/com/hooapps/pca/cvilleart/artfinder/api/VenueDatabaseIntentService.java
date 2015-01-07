@@ -3,22 +3,15 @@ package com.hooapps.pca.cvilleart.artfinder.api;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.hooapps.pca.cvilleart.artfinder.Datastore;
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
-import com.hooapps.pca.cvilleart.artfinder.R;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenueResponse;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
-import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
 import com.hooapps.pca.cvilleart.artfinder.data.VenueTable;
 
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -65,8 +58,6 @@ public class VenueDatabaseIntentService extends IntentService {
         // Loop through every item and prep it for insert
         ContentValues values;
         String lastUpdatedTime = "";
-
-        Log.d("TEST", "Size: " + artVenueList.size());
 
         for (ArtVenue venue : artVenueList) {
             values = makeContentValuesFromObject(venue);

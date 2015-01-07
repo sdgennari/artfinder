@@ -1,7 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,6 @@ public class AboutFragment extends BaseFragment {
                     @Override
                     public void call(PCAResponse pcaResponse) {
                         descriptionView.setText(pcaResponse.getDescription());
-                        Log.d("PCA", "OBSERVABLE CALLED");
                     }
                 });
 

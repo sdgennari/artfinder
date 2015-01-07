@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.hooapps.pca.cvilleart.artfinder.MainApp;
 import com.hooapps.pca.cvilleart.artfinder.R;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -43,8 +40,6 @@ public class EventDatabaseIntentService extends IntentService {
 
         String maxTime = intent.getStringExtra(C.EXT_MAX_TIME);
         String minTime = intent.getStringExtra(C.EXT_MIN_TIME);
-
-        Log.d("TEST", "max: " + maxTime);
 
         try {
             // Dance
@@ -125,8 +120,6 @@ public class EventDatabaseIntentService extends IntentService {
         int del = db.delete(EventTable.TABLE_EVENTS,
                 EventTable.COL_END_TIME + " < " + (c.getTimeInMillis()),
                 null);
-
-        Log.d("TEST", "Deleted " + del + " events");
     }
 
     private void insertEvents() {
@@ -135,8 +128,6 @@ public class EventDatabaseIntentService extends IntentService {
 
         // Loop through every item and prep it for insert
         ContentValues values;
-
-        Log.d("TEST", "Event Size: " + eventList.size());
 
         for (Event event : eventList) {
             if (event.start.dateTime != null) {
@@ -191,8 +182,6 @@ public class EventDatabaseIntentService extends IntentService {
 
             // Insert or update the columns
             db.insertWithOnConflict(EventTable.TABLE_EVENTS, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-            Log.d("TEST", event.id);
 
             // Increment the day
             tmpDate += MS_PER_DAY;

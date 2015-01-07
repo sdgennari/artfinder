@@ -45,12 +45,9 @@
 
         <service android:name=".api.VenueDatabaseIntentService"
             android:exported="false"/>
-        <service android:name=".api.ImageDownloadIntentService"
-            android:exported="false"/>
         <service android:name=".api.EventDatabaseIntentService"
             android:exported="false"/>
 
-        <!-- TODO REPLACE THIS WITH THE RELEASE KEY -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDegSazDw-VcXQtWyVDmsDiV-xgwaT9ijE" />

@@ -1,9 +1,6 @@
 package com.hooapps.pca.cvilleart.artfinder.api.model;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
-import com.hooapps.pca.cvilleart.artfinder.MainApp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,7 +73,7 @@ public class ArtVenue {
             Date date = dateFormat.parse(createdAtString.replaceAll("[a-zA-Z]", " ").trim());
             return date.getTime();
         } catch (ParseException e) {
-            Log.e(MainApp.TAG, e.getLocalizedMessage());
+            //Log.e(MainApp.TAG, e.getLocalizedMessage());
         }
         return 0;
     }
@@ -90,7 +87,7 @@ public class ArtVenue {
             Date date = dateFormat.parse(updatedAtString.replaceAll("[a-zA-Z]", " ").trim());
             return date.getTime();
         } catch (ParseException e) {
-            Log.e(MainApp.TAG, e.getLocalizedMessage());
+            //Log.e(MainApp.TAG, e.getLocalizedMessage());
         }
         return 0;
     }

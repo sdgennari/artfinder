@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import com.hooapps.pca.cvilleart.artfinder.adapter.NavDrawerAdapter;
 import com.hooapps.pca.cvilleart.artfinder.api.EventDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueDatabaseIntentService;
 import com.hooapps.pca.cvilleart.artfinder.api.VenueService;
-import com.hooapps.pca.cvilleart.artfinder.api.model.ArtVenue;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 import com.hooapps.pca.cvilleart.artfinder.fragment.AboutFragment;
 import com.hooapps.pca.cvilleart.artfinder.fragment.EventListFragment;
@@ -33,12 +31,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import rx.Subscription;
 
 public class MainActivity extends BaseActivity implements
         HomeFragment.OnHomeFragmentButtonSelectedListener {
@@ -174,9 +170,7 @@ public class MainActivity extends BaseActivity implements
 
     private void fetchArtVenueData() {
         String upgradeDateString = datastore.getArtVenueUpdateDate();
-        Log.d("SUCCESS", upgradeDateString);
         String whereClause = String.format(VenueService.WHERE_DATE_QUERY_BASE, upgradeDateString);
-        Log.d("SUCCESS", whereClause);
 
         Intent intent = new Intent(this, VenueDatabaseIntentService.class);
         intent.putExtra(C.EXT_WHERE_CLAUSE, whereClause);

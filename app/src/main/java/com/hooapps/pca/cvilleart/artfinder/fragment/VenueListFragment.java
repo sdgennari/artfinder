@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,8 +101,6 @@ public class VenueListFragment extends BaseFragment implements
                 null,
                 null,
                 VenueTable.COL_PRIMARY_CATEGORY + " ASC, UPPER(" + VenueTable.COL_ORGANIZATION_NAME + ") ASC");
-
-        Log.d("VENUES", "" + c.getCount());
 
         ArtVenue venue;
         while (c.moveToNext()) {

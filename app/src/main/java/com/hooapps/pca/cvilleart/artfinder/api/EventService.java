@@ -4,13 +4,9 @@ import com.hooapps.pca.cvilleart.artfinder.api.model.EventResponse;
 import com.hooapps.pca.cvilleart.artfinder.constants.C;
 
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 public interface EventService {
-    // TODO UPDATE DATE FORMAT
-    public static final String DATE_FORMAT = "yyyy-MM-dd";
-
     public static final String EVENT_BASE_URL = "https://www.googleapis.com/calendar/v3/calendars";
     public static final String EVENT_QUERY = "/events?singleEvents=true&key=" + C.GOOGLE_API_KEY;
 

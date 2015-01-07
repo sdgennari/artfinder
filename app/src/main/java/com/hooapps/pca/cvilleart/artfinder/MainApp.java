@@ -8,11 +8,7 @@ import com.hooapps.pca.cvilleart.artfinder.data.PCASqliteHelper;
 
 public class MainApp extends Application {
 
-    public static String TAG = "cville-artfinder";
     private static Context sContext;
-
-    // TODO ADD ANALYTICS TRACKING
-    private static final String ANALYTICS_TRACKER_ID = "XXX";
 
     @Override
     public void onCreate() {

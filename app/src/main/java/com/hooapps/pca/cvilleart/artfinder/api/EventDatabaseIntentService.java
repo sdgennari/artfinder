@@ -102,7 +102,6 @@ public class EventDatabaseIntentService extends IntentService {
     private EventService initEventService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(EventService.EVENT_BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
         return restAdapter.create(EventService.class);
     }

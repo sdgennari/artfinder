@@ -46,7 +46,6 @@ public class VenueDatabaseIntentService extends IntentService {
     private VenueService initVenueService() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(VenueService.VENUE_BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
         return restAdapter.create(VenueService.class);
     }
